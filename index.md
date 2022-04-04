@@ -2,7 +2,7 @@
 
 **Derek Zhang and Chih-Yun Tseng**
 
-Welcome to our Advances in XR (CMSC498F/CMSC838C) final project ***teachAR***.
+Welcome to our Advances in XR (CMSC498F/CMSC838C) final project ***instructAR***.
 
 ## Project Description
 **instructAR** (pronounced *"instructor"*) is an mobile app that facilitates classroom teaching experience for instructors. There are 3 features that we are proposing for the app:
