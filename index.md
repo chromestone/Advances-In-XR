@@ -2,40 +2,23 @@
 
 **Derek Zhang and Chih-Yun Tseng**
 
-Welcome to our Advances in XR (CMSC498F/CMSC838C) final project.
+Welcome to our Advances in XR (CMSC498F/CMSC838C) final project ***teachAR***.
 
-You can use the [editor on GitHub](https://github.com/chromestone/Advances-In-XR/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+# Project Description
+**teachAR** (pronounced *"teacher"*) is an mobile app that facilitates classroom teaching experience for instructors. There are 3 features that we are proposing for the app:
+1. **Sentiment dectection with our original ML model:** During the pandemic, many teachers are having a hard time learning how students are doing (e.g. confusion or frustration) in class due to mask mandates. Our first step is to implement a user friendly system for sentiment detection on unoccluded faces. We are hopeful but not yet sure if this can be extended to masked faces (that's research?).
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+2. **AR studentID:** When teachers want to get to know their students better, they can use our app to scan a student's ID card and a mini AR resume will pop out listing the key informations about a student.
 
-### Markdown
+3. **Speak-into-text memo:** Many times, teachers ask students to "Remind me after class" or "Remind me on Piazza" if a question arouses during lecture. However, this usually causes both parties to forget about the reminder. Our app aims to enable the speak-into-text feature for teachers to transcribe in-class announcements into text memos.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
 
-```markdown
-Syntax highlighted code block
+# April 5th Project Proposal
+[838c_final_project_presentation.pdf](https://github.com/chromestone/Advances-In-XR/files/8413636/838c_final_project_presentation.pdf)
 
-# Header 1
-## Header 2
-### Header 3
+# April 26th Project Progress Report
+To be updated.
 
-- Bulleted
-- List
+# Mid-May Project Presentation
+To be updated.
 
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/chromestone/Advances-In-XR/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
