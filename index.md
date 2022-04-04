@@ -1,4 +1,8 @@
-## Welcome to GitHub Pages
+## Masked Face Emotion Recognizer (M-FER) in AR
+
+**Derek Zhang and Chih-Yun Tseng**
+
+Welcome to our Advances in XR (CMSC498F/CMSC838C) final project.
 
 You can use the [editor on GitHub](https://github.com/chromestone/Advances-In-XR/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
 
