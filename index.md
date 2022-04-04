@@ -1,4 +1,4 @@
-## Masked Face Emotion Recognizer (M-FER) in AR
+## teachAR -- Enhancing Teaching Experience with AR
 
 **Derek Zhang and Chih-Yun Tseng**
 
