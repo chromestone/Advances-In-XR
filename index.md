@@ -14,7 +14,8 @@ Welcome to our Advances in XR (CMSC498F/CMSC838C) final project ***instructAR***
 
 
 ## April 5th Project Proposal
-[838c_final_project_proposal.pdf](https://github.com/chromestone/Advances-In-XR/files/8413771/838c_final_project_presentation.1.pdf)
+[838c_final_project_presentation.pdf](https://github.com/chromestone/Advances-In-XR/files/8421427/838c_final_project_presentation.2.pdf)
+
 
 ## April 26th Project Progress Report
 To be updated.
