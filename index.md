@@ -23,3 +23,10 @@ To be updated.
 ## Mid-May Project Presentation
 To be updated.
 
+## References
+1. Speech-to-text
+   * https://github.com/j1mmyto9/Speech-And-Text-Unity-iOS-Android
+2. AR student bussiness card
+   * Vuforia Engine: https://library.vuforia.com/
+3. Sentiment Detection Model
+
