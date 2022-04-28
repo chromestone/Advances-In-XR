@@ -1,6 +1,6 @@
 # instructAR -- Enhancing Teaching Experience with AR
 
-**Derek Zhang and Chih-Yun Tseng**
+**Derek Zhang (838C) and Chih-Yun Tseng (498F)**
 
 Welcome to our Advances in XR (CMSC498F/CMSC838C) final project ***instructAR***.
 
