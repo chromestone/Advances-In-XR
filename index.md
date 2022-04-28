@@ -29,7 +29,9 @@ To be updated.
 
 ## References
 1. Speech-to-text
-   * 
+   * https://realpython.com/python-speech-recognition/
+   * https://docs.unity3d.com/Packages/com.unity.scripting.python@4.0/manual/index.html
+   * https://youtu.be/Cq1JVjYfRXY
 2. AR student bussiness card
    * Vuforia Engine: https://library.vuforia.com/
 3. Sentiment Detection Model
