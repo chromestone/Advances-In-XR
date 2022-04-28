@@ -21,6 +21,7 @@ Welcome to our Advances in XR (CMSC498F/CMSC838C) final project ***instructAR***
 [838c_final_project_progress_report.pdf](https://github.com/chromestone/Advances-In-XR/files/8585267/838c_final_project_progress_report.pdf)
 * Example images <br />
   <img src="https://chromestone.github.io/Advances-In-XR/example.jpg" alt="sentiment-detection" width="512" height="auto">
+  <img src="https://user-images.githubusercontent.com/55725395/165830203-ad6de07b-94df-4308-84d4-e25e399afc8c.jpg" alt="Ar Card demo" width="250" height="auto">
 
 
 ## Mid-May Project Presentation
