@@ -17,8 +17,8 @@ Welcome to our Advances in XR (CMSC498F/CMSC838C) final project ***instructAR***
 [838c_final_project_presentation.pdf](https://github.com/chromestone/Advances-In-XR/files/8421427/838c_final_project_presentation.2.pdf)
 
 
-## April 26th Project Progress Report
-[838c_final_project_progress_report.pdf](https://chromestone.github.io/Advances-In-XR/final_project_progress_report.pdf)
+## April 28th Project Progress Report
+[838c_final_project_progress_report.pdf](https://github.com/chromestone/Advances-In-XR/files/8585267/838c_final_project_progress_report.pdf)
 
 
 ## Mid-May Project Presentation
@@ -26,8 +26,31 @@ To be updated.
 
 ## References
 1. Speech-to-text
-   * https://github.com/j1mmyto9/Speech-And-Text-Unity-iOS-Android
+   * 
 2. AR student bussiness card
    * Vuforia Engine: https://library.vuforia.com/
 3. Sentiment Detection Model
 
+## Instructions
+1. Before building the app on Xcode, activate speech-to-text feature by downloading required libraries: <br /><br />
+  ***Recommended Way***<br />
+  * step 1) Clone the library manually
+  ```
+  git clone https://github.com/nhorvath/Pyrebase4.git
+  ```
+  * step 2) Find the path to your python3 site-packages directory (e.g. Library/Python/3.9/lib/python/site-packages) 
+  ```
+  python3 -m site
+  the path should be under USER_SITE:
+  ```
+  * step 3) Drag ONLY the pyrebase folder to your local python3 directory from step (2)<br /><br />
+  
+  ***Alternative (NOT recommended)***<br />
+  ```
+  pip install pyrebase4
+  ```
+2. In your local terminal, type in (Remember to add the quotes around the path)
+```
+python3 cronjob.py "<path to the local directory that you want to test this project in>"
+```
+  
