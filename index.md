@@ -50,7 +50,7 @@ To be updated.
     pip install pyrebase4
     ```
 2. In your local terminal, type in (be sure to add the quotes around the path)
-```
-python3 audioProcessing.py "<path to the local directory that you want to test this project in>"
-```
-  
+  ```
+  python3 audioProcessing.py "<path to the local directory that you want to test this project in>"
+  ```
+
