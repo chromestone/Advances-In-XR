@@ -33,24 +33,24 @@ To be updated.
 
 ## Instructions
 1. Before building the app on Xcode, activate speech-to-text feature by downloading required libraries: <br /><br />
-  ***Recommended Way***<br />
-  * step 1) Clone the library manually
-  ```
-  git clone https://github.com/nhorvath/Pyrebase4.git
-  ```
-  * step 2) Find the path to your python3 site-packages directory (e.g. Library/Python/3.9/lib/python/site-packages) 
-  ```
-  python3 -m site
-  the path should be under USER_SITE:
-  ```
-  * step 3) Drag ONLY the pyrebase folder to your local python3 directory from step (2)<br /><br />
+  * ***Recommended***<br />
+    * step 1) Clone the library manually
+    ```
+    git clone https://github.com/nhorvath/Pyrebase4.git
+    ```
+    * step 2) Find the path to your python3 site-packages directory (e.g. Library/Python/3.9/lib/python/site-packages) 
+    ```
+    python3 -m site
+    the path should be under USER_SITE:
+    ```
+    * step 3) Drag ONLY the pyrebase folder to your local python3 directory from step (2)<br /><br />
   
-  ***Alternative (NOT recommended)***<br />
-  ```
-  pip install pyrebase4
-  ```
-2. In your local terminal, type in (Remember to add the quotes around the path)
+  * ***Alternative (NOT recommended)***<br />
+    ```
+    pip install pyrebase4
+    ```
+2. In your local terminal, type in (be sure to add the quotes around the path)
 ```
-python3 cronjob.py "<path to the local directory that you want to test this project in>"
+python3 audioProcessing.py "<path to the local directory that you want to test this project in>"
 ```
   
