@@ -25,6 +25,7 @@ _Imagine you're a teacher in a classroom of students wearing masks. You have no 
   <img src="https://chromestone.github.io/Advances-In-XR/example.jpg" alt="sentiment-detection" width="512" height="auto">
   <img src="https://user-images.githubusercontent.com/55725395/165830203-ad6de07b-94df-4308-84d4-e25e399afc8c.jpg" alt="Ar Card demo" width="250" height="auto">
 
+![Depth Estimation](https://chromestone.github.io/Advances-In-XR/depth_estimation.gif)
 
 ## Mid-May Project Presentation
 To be updated.
