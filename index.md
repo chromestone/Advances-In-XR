@@ -6,6 +6,14 @@ Welcome to our Advances in XR (CMSC498F/CMSC838C) final project ***instructAR***
 
 _Imagine you're a teacher in a classroom of students wearing masks. You have no idea if they are understanding the lecture. Our project idea is to create a teaching aid using AR that can hint at what a student is feeling (e.g. confusion or frustration). Our first step is to implement a user friendly system for sentiment detection on unoccluded faces. We are hopeful but not yet sure if this can be extended to masked faces._
 
+* Example images <br />
+  <img src="https://chromestone.github.io/Advances-In-XR/example.jpg" alt="sentiment-detection" width="512" height="auto">
+  <img src="https://user-images.githubusercontent.com/55725395/165830203-ad6de07b-94df-4308-84d4-e25e399afc8c.jpg" alt="Ar Card demo" width="250" height="auto">
+
+![Depth Estimation](https://chromestone.github.io/Advances-In-XR/depth_estimation.gif)
+
+_Left: 2D canvas without depth. Right: Using iris based depth estimation._
+
 ## Project Description
 **instructAR** (pronounced *"instructor"*) is an mobile app that facilitates classroom teaching experience for instructors. There are 3 features that we are proposing for the app:
 1. **Sentiment dectection with our original ML model:** During the pandemic, many teachers are having a hard time learning how students are doing (e.g. confusion or frustration) in class due to mask mandates. Our first step is to implement a user friendly system for sentiment detection on unoccluded faces. We are hopeful but not yet sure if this can be extended to masked faces (that's research?).
@@ -21,11 +29,6 @@ _Imagine you're a teacher in a classroom of students wearing masks. You have no 
 
 ## April 28th Project Progress Report
 [838c_final_project_progress_report.pdf](https://github.com/chromestone/Advances-In-XR/files/8585267/838c_final_project_progress_report.pdf)
-* Example images <br />
-  <img src="https://chromestone.github.io/Advances-In-XR/example.jpg" alt="sentiment-detection" width="512" height="auto">
-  <img src="https://user-images.githubusercontent.com/55725395/165830203-ad6de07b-94df-4308-84d4-e25e399afc8c.jpg" alt="Ar Card demo" width="250" height="auto">
-
-![Depth Estimation](https://chromestone.github.io/Advances-In-XR/depth_estimation.gif)
 
 ## Mid-May Project Presentation
 To be updated.
