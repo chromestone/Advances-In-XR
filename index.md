@@ -25,10 +25,10 @@ _Lastly, we also support speech recognition feature that transcribes important i
 
 ### Example images <a name="ex"></a>
 <p>
-  <img src="https://chromestone.github.io/Advances-In-XR/example.jpg" alt="sentiment-detection" width="360" height="auto">
-  <img src="https://user-images.githubusercontent.com/55725395/165830203-ad6de07b-94df-4308-84d4-e25e399afc8c.jpg" alt="Ar Card demo" width="250" height="auto">
   <img src="https://chromestone.github.io/Advances-In-XR/depth_estimation.gif" alt="Depth Estimation">
-  <div style="text-align: right;"><em>Left: 2D canvas without depth. Right: Using iris based depth estimation.</em></div>
+  <img src="https://user-images.githubusercontent.com/55725395/165830203-ad6de07b-94df-4308-84d4-e25e399afc8c.jpg" alt="Ar Card demo" width="250" height="auto">
+  <img src="https://chromestone.github.io/Advances-In-XR/example.jpg" alt="sentiment-detection" width="360" height="auto">
+  <div style="text-align: right;"><em>&#8679; (first pic) Left: 2D canvas without depth. Right: Using iris based depth estimation.</em></div>
 </p>
 
 ## Project Description <a name="pd"></a>
