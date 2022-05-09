@@ -37,9 +37,7 @@ _Left: 2D canvas without depth. Right: Using iris based depth estimation._
 2. **AR studentID:** When teachers want to get to know their students better, they can use our app to scan a student's ID card and a mini AR resume will pop out listing the key informations about a student.
 
 3. **Speak-into-text memo:** Many times, teachers ask students to "Remind me after class" or "Remind me on Piazza" if a question arouses during lecture. However, this usually causes both parties to forget about the reminder. Our app aims to enable the speak-into-text feature for teachers to transcribe in-class announcements into text memos.
-<br>
-<br>
-<hr>
+
 ## Results & Analysis <a name="res"></a>
 * 
 
