@@ -51,3 +51,6 @@ To be updated.
 1. When running the project on Xcode, be sure to run the entire build file and not just the xcodeproj file.
 2. If you would like to perform queries on the database, please make sure that the specified email address and filename exists, and that the date is also relevant. By default, if an user only inputs their email address, they will receive all memos since May 1st 2022.
 
+## Links to our code
+* Unity app code distribution: https://github.com/ctseng98/cmsc498F/tree/main/FinalProject%20(1)
+* Website + speech-to-text code: https://github.com/ctseng98/cmsc498F/tree/main/SpeechToText
