@@ -28,9 +28,8 @@ _Lastly, we also support speech recognition feature that transcribes important i
   <img src="https://chromestone.github.io/Advances-In-XR/example.jpg" alt="sentiment-detection" width="360" height="auto">
   <img src="https://user-images.githubusercontent.com/55725395/165830203-ad6de07b-94df-4308-84d4-e25e399afc8c.jpg" alt="Ar Card demo" width="250" height="auto">
   <img src="https://chromestone.github.io/Advances-In-XR/depth_estimation.gif" alt="Depth Estimation">
+  <div style="text-align: right;"><em>Left: 2D canvas without depth. Right: Using iris based depth estimation.</em></div>
 </p>
-
-_Left: 2D canvas without depth. Right: Using iris based depth estimation._
 
 ## Project Description <a name="pd"></a>
 **instructAR** (pronounced *"instructor"*) is an mobile app that facilitates classroom teaching experience for instructors. There are 3 features that we are proposing for the app:
