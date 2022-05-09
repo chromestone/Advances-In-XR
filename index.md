@@ -8,12 +8,12 @@ Welcome to our Advances in XR (CMSC498F/CMSC838C) final project ***instructAR***
 1. [Introduction](#introduction)
 2. [Project Description](#pd)
 3. [Results & Analysis](#res)
-4. [April 5th Project Proposal](#a5)
-5. [April 28th Project Progress Report](#a28)
-6. [Mid-May Project Presentation](#mmay)
-7. [Instructions](#inst)
-8. [Links to Our Code](#code)
-9. [References](#ref)
+4. [Mid-May Project Presentation](#mmay)
+7. [April 28th Project Progress Report](#a28)
+8. [April 5th Project Proposal](#a5)
+9. [Instructions](#inst)
+10. [Links to our code](#code)
+11. [References](#ref)
 
 ## Introduction <a name="introduction"></a>
 _Imagine you're a teacher in a classroom of students wearing masks. You have no idea if they are understanding the lecture. Our project idea is to create a teaching aid using AR that can hint at what a student is feeling (e.g. confusion or frustration). Our first step is to implement a user friendly system for sentiment detection on unoccluded faces. We are hopeful but not yet sure if this can be extended to masked faces._
@@ -41,15 +41,14 @@ _Left: 2D canvas without depth. Right: Using iris based depth estimation._
 ## Results & Analysis <a name="res"></a>
 * TBA
 
-## April 5th Project Proposal <a name="a5"></a>
-[838c_final_project_presentation.pdf](https://github.com/chromestone/Advances-In-XR/files/8421427/838c_final_project_presentation.2.pdf)
-
-
-## April 28th Project Progress Report <a name="a28"></a>
-[838c_final_project_progress_report.pdf](https://github.com/chromestone/Advances-In-XR/files/8585267/838c_final_project_progress_report.pdf)
-
 ## Mid-May Project Presentation <a name="mmay"></a>
 To be updated.
+
+## April 28th Project Progress Report <a name="a28"></a>
+[498F/838c_final_project_progress_report.pdf](https://github.com/chromestone/Advances-In-XR/files/8585267/838c_final_project_progress_report.pdf)
+
+## April 5th Project Proposal <a name="a5"></a>
+[498F/838c_final_project_presentation.pdf](https://github.com/chromestone/Advances-In-XR/files/8421427/838c_final_project_presentation.2.pdf)
 
 ## Instructions <a name="inst"></a>
 1. When running the project on Xcode, be sure to run the entire build file and not just the xcodeproj file.
