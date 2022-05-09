@@ -39,7 +39,7 @@ _Left: 2D canvas without depth. Right: Using iris based depth estimation._
 3. **Speak-into-text memo:** Many times, teachers ask students to "Remind me after class" or "Remind me on Piazza" if a question arouses during lecture. However, this usually causes both parties to forget about the reminder. Our app aims to enable the speak-into-text feature for teachers to transcribe in-class announcements into text memos.
 
 ## Results & Analysis <a name="res"></a>
-* 
+* TBA
 
 ## April 5th Project Proposal <a name="a5"></a>
 [838c_final_project_presentation.pdf](https://github.com/chromestone/Advances-In-XR/files/8421427/838c_final_project_presentation.2.pdf)
