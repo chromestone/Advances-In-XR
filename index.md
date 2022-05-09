@@ -5,15 +5,15 @@
 Welcome to our Advances in XR (CMSC498F/CMSC838C) final project ***instructAR***.
 
 ## Table of contents
-1. [Introduction](#introduction)
-2. [Project Description](#pd)
-3. [Results & Analysis](#res)
-4. [Mid-May Project Presentation](#mmay)
-7. [April 28th Project Progress Report](#a28)
-8. [April 5th Project Proposal](#a5)
-9. [Instructions](#inst)
-10. [Links to our code](#code)
-11. [References](#ref)
+* [Introduction](#introduction)
+* [Project Description](#pd)
+* [Results & Analysis](#res)
+* [May 18th Project Presentation](#mmay)
+* [April 28th Project Progress Report](#a28)
+* [April 5th Project Proposal](#a5)
+* [Instructions](#inst)
+* [Links to our source code](#code)
+* [References](#ref)
 
 ## Introduction <a name="introduction"></a>
 _Imagine you're a teacher in a classroom of students wearing masks. You have no idea if they are understanding the lecture. Our project idea is to create a teaching aid using AR that can hint at what a student is feeling (e.g. confusion or frustration). Our first step is to implement a user friendly system for sentiment detection on unoccluded faces. We are hopeful but not yet sure if this can be extended to masked faces._
@@ -39,9 +39,9 @@ _Left: 2D canvas without depth. Right: Using iris based depth estimation._
 3. **Speak-into-text memo:** Many times, teachers ask students to "Remind me after class" or "Remind me on Piazza" if a question arouses during lecture. However, this usually causes both parties to forget about the reminder. Our app aims to enable the speak-into-text feature for teachers to transcribe in-class announcements into text memos.
 
 ## Results & Analysis <a name="res"></a>
-* TBA
+* [Our website for speech-to-text memo](http://instructar.pythonanywhere.com/)
 
-## Mid-May Project Presentation <a name="mmay"></a>
+## May 18th Project Presentation <a name="mmay"></a>
 To be updated.
 
 ## April 28th Project Progress Report <a name="a28"></a>
@@ -54,16 +54,15 @@ To be updated.
 1. When running the project on Xcode, be sure to run the entire build file and not just the xcodeproj file.
 2. If you would like to perform queries on the database, please make sure that the specified email address and filename exists, and that the date is also relevant. By default, if an user only inputs their email address, they will receive all memos since May 1st 2022.
 
-## Links to Our Code <a name="code"></a>
-* Unity app code distribution: https://github.com/ctseng98/cmsc498F/tree/main/FinalProject%20(1)
-* Website + speech-to-text code: https://github.com/ctseng98/cmsc498F/tree/main/SpeechToText
+## Links to our source code <a name="code"></a>
+* [Unity app code distribution](https://github.com/ctseng98/cmsc498F/tree/main/FinalProject%20(1))
+* [Website + speech-to-text code](https://github.com/ctseng98/cmsc498F/tree/main/SpeechToText)
 
 ## References <a name="ref"></a>
 1. Speech-to-text
-   * https://realpython.com/python-speech-recognition/
-   * https://youtu.be/Cq1JVjYfRXY
-   * Google firebase: https://firebase.google.com/docs
-   * The website that we've setup: http://instructar.pythonanywhere.com/
+   * [Python tutorial](https://realpython.com/python-speech-recognition/)
+   * [Firebase + Unity tutorial](https://youtu.be/Cq1JVjYfRXY)
+   * [Google firebase](https://firebase.google.com/docs)
 2. AR student bussiness card
-   * Vuforia Engine: https://library.vuforia.com/
+   * [Vuforia Engine](https://library.vuforia.com/)
 3. Sentiment Detection Model
