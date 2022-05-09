@@ -24,10 +24,11 @@ _Want to get to know your students better? Out app aims to provide a quick scan 
 _Lastly, we also support speech recognition feature that transcribes important information teachers might want to record during lecture time. It is often difficult to keep a memo while teaching in a fast pace. Teachers will be able to receive their transcribed memo from our website easily after class._
 
 ### Example images <a name="ex"></a>
+ <p>
   <img src="https://chromestone.github.io/Advances-In-XR/example.jpg" alt="sentiment-detection" width="360" height="auto">
   <img src="https://user-images.githubusercontent.com/55725395/165830203-ad6de07b-94df-4308-84d4-e25e399afc8c.jpg" alt="Ar Card demo" width="250" height="auto">
-
-![Depth Estimation](https://chromestone.github.io/Advances-In-XR/depth_estimation.gif)
+  ![Depth Estimation](https://chromestone.github.io/Advances-In-XR/depth_estimation.gif)
+ </p>
 
 _Left: 2D canvas without depth. Right: Using iris based depth estimation._
 
