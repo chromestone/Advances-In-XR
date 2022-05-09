@@ -6,6 +6,10 @@ Welcome to our Advances in XR (CMSC498F/CMSC838C) final project ***instructAR***
 
 _Imagine you're a teacher in a classroom of students wearing masks. You have no idea if they are understanding the lecture. Our project idea is to create a teaching aid using AR that can hint at what a student is feeling (e.g. confusion or frustration). Our first step is to implement a user friendly system for sentiment detection on unoccluded faces. We are hopeful but not yet sure if this can be extended to masked faces._
 
+_Want to get to know your students better? Out app aims to provide a quick scan on their student ID that will show links to their resume (e.g. LinkedIn site) and social media pages._
+
+_Lastly, we also support speech recognition feature that transcribes important information teachers might want to record during lecture time. It is often difficult to keep a memo while teaching in a fast pace. Teachers will be able to receive their transcribed memo from our website easily after class._
+
 * Example images <br />
   <img src="https://chromestone.github.io/Advances-In-XR/example.jpg" alt="sentiment-detection" width="512" height="auto">
   <img src="https://user-images.githubusercontent.com/55725395/165830203-ad6de07b-94df-4308-84d4-e25e399afc8c.jpg" alt="Ar Card demo" width="250" height="auto">
