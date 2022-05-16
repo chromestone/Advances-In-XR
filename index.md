@@ -8,6 +8,7 @@ Welcome to our Advances in XR (CMSC498F/CMSC838C) final project ***instructAR***
 * [Introduction](#introduction)
   * [Example Images](#ex)   
 * [Project Description](#pd)
+* [Methodology](#meth)
 * [Results & Analysis](#res)
 * [May 18th Project Presentation](#mmay)
 * [April 28th Project Progress Report](#a28)
@@ -38,6 +39,15 @@ _Lastly, we also support speech recognition feature that transcribes important i
 2. **AR studentID:** When teachers want to get to know their students better, they can use our app to scan a student's ID card and a mini AR resume will pop out listing the key informations about a student.
 
 3. **Speak-into-text memo:** Many times, teachers ask students to "Remind me after class" or "Remind me on Piazza" if a question arouses during lecture. However, this usually causes both parties to forget about the reminder. Our app aims to enable the speak-into-text feature for teachers to transcribe in-class announcements into text memos.
+
+## Methodology <a name="meth"></a>
+<u>AR Student ID</u>
+This is built with the Vuforia engine. Vuforia supports image tracking which is very helpful for this feature. We set our UMD student IDs as image targets and then created game objects in Unity that serve as our AR cards. 
+
+<u>Speech-to-Text Memo</u>
+At first, we wanted to see if there is any built-in support in Unity for speech recognition. However, most online sources are out-to-date or are not compatible with our devices (iOS). Some online blog posts suggest writing a wrapper that takes the speech recognition library (in Object-C) and turns it into C# code. This solution is quite hard to implement as we are not familiar with both languages (seems like the wrappers are based in CPP and also require knowledge of what Unity supports). Therefore, we chose to use Python which has well-established speech-recognition libraries (the one we have used is the google speech recognition).    
+
+
 
 ## Results & Analysis <a name="res"></a>
 * [Our website for speech-to-text memo](http://instructar.pythonanywhere.com/)
