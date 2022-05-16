@@ -9,6 +9,7 @@ Welcome to our Advances in XR (CMSC498F/CMSC838C) final project ***instructAR***
   * [Example Images](#ex)   
 * [Project Description](#pd)
 * [Methodology](#meth)
+* [Demo](#demo)
 * [Results & Analysis](#res)
 * [May 18th Project Presentation](#mmay)
 * [April 28th Project Progress Report](#a28)
@@ -47,7 +48,7 @@ This is built with the Vuforia engine. Vuforia supports image tracking which is 
 ### Speech-to-Text Memo
 At first, we wanted to see if there is any built-in support in Unity for speech recognition. However, most online sources are out-to-date or are not compatible with our devices (iOS). Some online blog posts suggest writing a wrapper that takes the speech recognition library (in Object-C) and turns it into C# code. This solution is quite hard to implement as we are not familiar with both languages (seems like the wrappers are based in CPP and also require knowledge of what Unity supports). Therefore, we chose to use Python which has well-established speech-recognition libraries (the one we have used is the google speech recognition).    
 
-
+## Demo <a name="demo"></a>
 
 ## Results & Analysis <a name="res"></a>
 * [Our website for speech-to-text memo](http://instructar.pythonanywhere.com/)
