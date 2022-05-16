@@ -18,11 +18,11 @@ Welcome to our Advances in XR (CMSC498F/CMSC838C) final project ***instructAR***
 * [References](#ref)
 
 ## Introduction <a name="introduction"></a>
-_Imagine you're a teacher in a classroom of students wearing masks. You have no idea if they are understanding the lecture. Our project idea is to create a teaching aid using AR that can hint at what a student is feeling (e.g. confusion or frustration). Our first step is to implement a user friendly system for sentiment detection on unoccluded faces. We are hopeful but not yet sure if this can be extended to masked faces._
+_Imagine you're a teacher in a classroom of students wearing masks. You have no idea if they understand the lecture. Our project idea is to create a teaching aid using AR that can hint at what a student is feeling (e.g. confusion or frustration). Our first step is to implement a user-friendly system for sentiment detection on unoccluded faces. We are hopeful but unsure if this can be extended to masked faces._
 
-_Want to get to know your students better? Out app aims to provide a quick scan on their student ID that will show links to their resume (e.g. LinkedIn site) and social media pages._
+_Want to get to know your students better? Our app aims to provide a quick scan of their student ID that will show links to their resume (e.g. LinkedIn site) and social media pages._
 
-_Lastly, we also support speech recognition feature that transcribes important information teachers might want to record during lecture time. It is often difficult to keep a memo while teaching in a fast pace. Teachers will be able to receive their transcribed memo from our website easily after class._
+_Lastly, we also support the speech recognition feature that transcribes important information teachers might want to record during lecture time. It is often difficult to keep a memo while teaching at a fast pace. Teachers will be able to receive their transcribed memos from our website easily after class._
 
 ### Example images <a name="ex"></a>
 <p>
