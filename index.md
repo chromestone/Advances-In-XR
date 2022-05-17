@@ -87,7 +87,10 @@ At first, we wanted to see if there is any built-in support in Unity for speech 
 
 ### eyeFER on Paper
 
-<img src="https://chromestone.github.io/Advances-In-XR/tradeoffs.png" alt="Trade Offs" loading="lazy">
+<img src="https://chromestone.github.io/Advances-In-XR/results/tradeoffs.png" alt="Trade Offs" loading="lazy">
+
+<img src="https://chromestone.github.io/Advances-In-XR/results/model_accuracy.png" alt="Model Accuracy" loading="lazy">
+
 
 ### eyeFER in Practice
 
