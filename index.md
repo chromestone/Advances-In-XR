@@ -87,7 +87,9 @@ At first, we wanted to see if there is any built-in support in Unity for speech 
 
 ### Demo <a name="demo"></a>
 * [Speech-to-text](https://youtu.be/bBLVGbJORTQ)
-* AR Student ID <img src="https://user-images.githubusercontent.com/55725395/168928945-836645a3-1cbb-4f4a-abef-3368cc2c54a5.gif)" alt="AR Student ID" width="300">
+* AR Student ID 
+<img src="https://user-images.githubusercontent.com/55725395/168929202-ab5fade5-7cd6-48f7-80d6-9f1148f24b26.gif" alt="AR Student ID" width="300">
+
 
 ### eyeFER on Paper
 
