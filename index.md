@@ -8,9 +8,11 @@ Welcome to our Advances in XR (CMSC498F/CMSC838C) final project ***instructAR***
 * [Introduction](#introduction)
   * [Example Images](#ex)   
 * [Project Description](#pd)
-* [Methodology](#meth)
-* [Demo](#demo)
+* [Related Work](#rwork)
+* [Challenges](#chal)
+* [Methodology](#method)
 * [Results & Analysis](#res)
+  * [Demo](#demo)
 * [May 18th Project Presentation](#mmay)
 * [April 28th Project Progress Report](#a28)
 * [April 5th Project Proposal](#a5)
@@ -41,16 +43,47 @@ _Lastly, we also support the speech recognition feature that transcribes importa
 
 3. **Speak-into-text memo:** Many times, teachers ask students to "Remind me after class" or "Remind me on Piazza" if a question arouses during lecture. However, this usually causes both parties to forget about the reminder. Our app aims to enable the speak-into-text feature for teachers to transcribe in-class announcements into text memos.
 
-## Methodology <a name="meth"></a>
+### Problem Statement
+
+**TODO**
+
+## Related Work <a name="rwork"></a>
+
+## Challenges <a name="chal"></a>
+
+## Methodology <a name="method"></a>
+
+### Face Emotion Recognition (FER)
+
+**What has already been done:**
+
+TODO talk about only free APIs.
+As far as we're aware mediapipe can handle everything up to face emotion recognition.
+
+As for the deep learning side, as far as I'm aware there isn't research on this.
+
+What I turned up by searching on Google Scholar were papers on the effect of masks on _humans_ performing face emotion recognition.
+
+**What Derek Did:**
+
 ### AR Student ID 
 This is built with the Vuforia engine. Vuforia supports image tracking which is very helpful for this feature. We set our UMD student IDs as image targets and then created game objects in Unity that serve as our AR cards. 
 
 ### Speech-to-Text Memo
 At first, we wanted to see if there is any built-in support in Unity for speech recognition. However, most online sources are out-of-date or are not compatible with our devices (iOS). Some online blog posts suggest writing a wrapper that takes the speech recognition library (in Object-C) and turns it into C# code. This solution is quite hard to implement as we are not familiar with both languages (seems like the wrappers are based in CPP and also require knowledge of what Unity supports). Therefore, we chose to use Python which has well-established speech-recognition libraries (the one we are using is the google speech recognition). However, we soon realized that Unity does not support Python in any way. It has a pre-released Python package that is only functional in Unity Editor, which means any Python code would not run after build. Thus, we decided to run Python externally and host a website that can process speech recognition without having to mess with Unity. As a result, audio files are now uploaded to our Firebase Storage and user information is uploaded to Firebase Firestore. The reason that we use both Firebase Storage and Firebase Firestore is that audio files (e.g. wav files) cannot be stored in a normal NoSQL database. We have tried to convert the audio file into a byte array and recover it into a wav file but the content gets very distorted and often times it would not even work. The two databases communicate with a special key that is auto-generated whenever users hit the “save” button in our app. The probability of a key collision is extremely small (in fact, 1/36<sup>10</sup>). When users want to retrieve their speech-to-text memo, they can click on the “Speech-to-Text” button on our app and visit our [website](http://instructar.pythonanywhere.com/) and fill out a query to our backend. Our backend first checks whether the specified file has been processed before. If so, then it fetches the corresponding text memo from Firebase Firestore and sends the txt file directly to the user’s email address. If not, then our backend fetches the audio file from Firebase Storage and performs speech recognition internally. Before doing speech recognition, we filter out ambient noises that may affect the conversion. This is important because google’s speech recognition library is pretty sensitive to pre-recorded audio (i.e. a recording of another recording) and background noise. Lastly, it will update the speech-to-text result to Firebase Firestore to prevent redundant processing in the future.
 
-## Demo <a name="demo"></a>
-
 ## Results & Analysis <a name="res"></a>
+
+### Demo <a name="demo"></a>
+
+**TODO: put link here**
+
+### eyeFER on Paper
+
+### eyeFER in Practice
+
+### Speech-to-Text Memo
+
 * [Our website for speech-to-text memo](http://instructar.pythonanywhere.com/)
 
 ## May 18th Project Presentation <a name="mmay"></a>
@@ -82,4 +115,4 @@ To be updated.
    * [Affectnet Dataset](http://mohammadmahoor.com/affectnet/)
    * [Affectnet Subset (that we actually used)](https://www.kaggle.com/datasets/mouadriali/affectnetsample)
    * Keijiro's ports of MediaPipe to Unity using the Barracuda library: [BlazeFace](https://github.com/keijiro/BlazeFaceBarracuda), [Face Landmark](https://github.com/keijiro/FaceLandmarkBarracuda), and [Iris Landmark](https://github.com/keijiro/IrisBarracuda).
-   * [MediaPipe (mainly for the face landmark model which we used to create the augmented dataset)](https://google.github.io/mediapipe/)
+   * [MediaPipe ](https://google.github.io/mediapipe/)  (mainly for the face landmark model which we used to create the augmented dataset) and their [GitHub](https://github.com/google/mediapipe) where we found math for iris size to depth.
