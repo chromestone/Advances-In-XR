@@ -50,8 +50,8 @@ _Lastly, we also support the speech recognition feature that transcribes importa
 **TODO**
 
 ### Contributions <a name="contri"></a>
-
-**TODO**
+**Derek Zhang**: 
+**Chih-Yun Tseng**: AR student ID, Speech-to-text feature, emoji overlay for sentiment dectection (without depth).
 
 ### Challenges <a name="cha"></a>
 
