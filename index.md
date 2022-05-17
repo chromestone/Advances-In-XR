@@ -9,7 +9,6 @@ Welcome to our Advances in XR (CMSC498F/CMSC838C) final project ***instructAR***
   * [Example Images](#ex)   
 * [Project Description](#pd)
 * [Related Work](#rwork)
-* [Challenges](#chal)
 * [Methodology](#method)
 * [Results & Analysis](#res)
   * [Demo](#demo)
@@ -47,9 +46,17 @@ _Lastly, we also support the speech recognition feature that transcribes importa
 
 **TODO**
 
+### Contributions
+
+**TODO**
+
+### Challenges
+
+**TODO**
+
 ## Related Work <a name="rwork"></a>
 
-## Challenges <a name="chal"></a>
+**TODO**
 
 ## Methodology <a name="method"></a>
 
@@ -79,6 +86,8 @@ At first, we wanted to see if there is any built-in support in Unity for speech 
 **TODO: put link here**
 
 ### eyeFER on Paper
+
+<img src="https://chromestone.github.io/Advances-In-XR/tradeoffs.png" alt="Trade Offs" loading="lazy">
 
 ### eyeFER in Practice
 
