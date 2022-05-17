@@ -81,5 +81,5 @@ To be updated.
 3. Sentiment Detection Model
    * [Affectnet Dataset](http://mohammadmahoor.com/affectnet/)
    * [Affectnet Subset (that we actually used)](https://www.kaggle.com/datasets/mouadriali/affectnetsample)
-   * Keijiro's ports of MediaPipe to Unity using the Barracuda library: [BlazeFace](https://github.com/keijiro/BlazeFaceBarracuda), [Face Landmark] (https://github.com/keijiro/FaceLandmarkBarracuda), and [Iris Landmark](https://github.com/keijiro/IrisBarracuda).
+   * Keijiro's ports of MediaPipe to Unity using the Barracuda library: [BlazeFace](https://github.com/keijiro/BlazeFaceBarracuda), [Face Landmark](https://github.com/keijiro/FaceLandmarkBarracuda), and [Iris Landmark](https://github.com/keijiro/IrisBarracuda).
    * [MediaPipe (mainly for the face landmark model which we used to create the augmented dataset)](https://google.github.io/mediapipe/)
