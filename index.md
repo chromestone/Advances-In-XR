@@ -8,6 +8,9 @@ Welcome to our Advances in XR (CMSC498F/CMSC838C) final project ***instructAR***
 * [Introduction](#introduction)
   * [Example Images](#ex)   
 * [Project Description](#pd)
+  * [Problem Statement](#ps)
+  * [Contributions](#contri)
+  * [Challenges](#cha)
 * [Related Work](#rwork)
 * [Methodology](#method)
 * [Results & Analysis](#res)
@@ -42,15 +45,15 @@ _Lastly, we also support the speech recognition feature that transcribes importa
 
 3. **Speak-into-text memo:** Many times, teachers ask students to "Remind me after class" or "Remind me on Piazza" if a question arouses during lecture. However, this usually causes both parties to forget about the reminder. Our app aims to enable the speak-into-text feature for teachers to transcribe in-class announcements into text memos.
 
-### Problem Statement
+### Problem Statement <a name="ps"></a>
 
 **TODO**
 
-### Contributions
+### Contributions <a name="contri"></a>
 
 **TODO**
 
-### Challenges
+### Challenges <a name="cha"></a>
 
 **TODO**
 
