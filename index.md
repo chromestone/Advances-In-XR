@@ -51,6 +51,7 @@ _Lastly, we also support the speech recognition feature that transcribes importa
 
 ### Contributions <a name="contri"></a>
 **Derek Zhang**: 
+<br>
 **Chih-Yun Tseng**: AR student ID, Speech-to-text feature, emoji overlay for sentiment dectection (without depth).
 
 ### Challenges <a name="cha"></a>
