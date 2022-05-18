@@ -66,6 +66,7 @@ It is often times difficult for instructors to jot down reminders during class t
 ### Contributions <a name="contri"></a>
 **Derek Zhang**:
 * integrated Keijiro's port of MediaPipe models (Face Detection, Face Landmarking, and Iris Landmarking) into our "pipeline"
+* created augmented AffectNet dataset (zero out lower half of face)
 * trained and analyzed deep learning models for FER/eyeFER
 * ported FER/eyeFER without locking up the app
 * added depth to our pipeline and the depth visualization (using a world space canvas).
@@ -112,12 +113,16 @@ One aspect of the app we can definitely focus on is optimization. In practice, w
 
 For now this can be allievated by using a bigger heatsink, such as a device as big as an iPad (this also has the benefit of a larger screen to see the student's emotions). In the future, we hope that better hardware and software will increase the practicality of deep learning for mobile.
 
-We could also consider running our big computer vision models in the cloud instead. However, the benefits of local compute is ease of scalability and privacy for the user.
+There are also latency issues since we have to run such big models. Technically, we are not running this pipeline in real time.
+
+With all these issues in mind, we could also consider running our big computer vision models in the cloud instead. However, the benefits of local compute is ease of scalability and privacy for the user.
 
 Secondly, we can consider using more realistic methods of augmentation or covering the lower part of the face. Since we already have face landmarks, I can do more research into how we can overlay various masks artificially over the face. This seeems very feasible given the fact that Snapchat has been able to do face filters for many years.
 
 We could even use more deep learning to do this. There has been [work done the other way around](https://ieeexplore.ieee.org/abstract/document/9019697
 ) by (N. Din et. al.) that explores using GANs to generate a realistic face without the mask conditioned on a masked face. You could use this GAN's output to create a self-supervised task of undoing the mask removing.
+
+Thirdly, our depth estimation only works for a single face setting. This is because the library
 
 Lastly, it could be worthwhile exploring how to make FER models more robust to face pose and lighting positions. It's interesting that while keeping my face expression the same, I've found that just by varying head tilt the model can bounce around various emotions.
 
@@ -138,16 +143,39 @@ Future work such as denoising the raw audio file can be done in order to improve
 
 **What has already been done:**
 
-TODO talk about only free APIs.
-As far as we're aware mediapipe can handle everything up to face emotion recognition.
+First, as far as libraries and SDKs that are free, we haven't found any library more general than Barracuda for neural network deployment onto Unity. And as far as we're aware, a port of MediaPipe ont Unity is the best option. Mediapipe can handle everything up to face emotion recognition. Specifically, we use Keijiro's port of three MediaPipe models: Face Detection, Face Landmarking, and Iris Landmarking.
 
-As for the deep learning side, as far as I'm aware there isn't research on this.
+Since we need to finetune a model for eyeFER anyway, we thought it be best to find a PyTorch model so we can train it. (There might be face emotion recognition plugins for Unity but we want to compare the effect of finetuning.) Hence, we used Barracuda to support all neural network ports.
 
-What I turned up by searching on Google Scholar were papers on the effect of masks on _humans_ performing face emotion recognition.
+As for eye based face emotion recognition, at the time of this writing, as far as I'm aware there isn't research on this yet. What I turned up by searching on Google Scholar were papers on the effect of masks on _humans_ performing face emotion recognition.
 
 **What Derek Did:**
 
+Software engineering
+
+Get screen capture efficient so we can run models on input from camera on phone
+
+Write the code to combine all of the models together into one flexible pipeline (with the option to turn off various models depending on the selected mode)
+
+Make it possible to run efficient net (budget compute)
+
+
+
 ### Iris Based Depth Estimation
+
+what has been done
+
+TODO: include 2 asesome grpahics from mediapipe
+
+what derek did
+
+use predicted depth to visualize
+
+figure out a way to not update game object pos as much
+
+software engineering
+
+make it so that world objects don't interfere with capture by using culling mask
 
 ### AR Student ID 
 This is built with the Vuforia engine. Vuforia supports image tracking which is very helpful for this feature. We set our UMD student IDs as image targets and then created game objects in Unity that serve as our AR cards. 
@@ -241,6 +269,8 @@ The blue curve in fig. 1 actually is to be expected. This curve represents our e
 Thus it is somewhat unfair to evaluate our finetuned model on the original dataset. And in practice, we argue that this usually isn't a problem since the presence of a face almost always means that we can perform landmark detection. So that means we can easily zero out the lower half of the face before feeding it into our finetuned model. This is how we implemented our eyeFER model in our app.
 
 This does lead us to be curious. What if we also trained a mouthFER? Would ensembling such a model with eyeFER lead to even decent results? And would adding a finetuned layer (for cross eye/mouth feature relations) get us anywhere close to SOTA?
+
+The orange line in fig. 1 shows the ensemble performance on the augmented dataset. Though this is also somewhat of an unfair evaluation since the baseline has never been trained on the augmented dataset, we argue there is still value to this analysis. For one, this curve shows that the finetuned model contributes more to the performance on the augmented dataset than the baseline. We know this by comparing at the steepness on both sides of the curve (split at $\alpha = 0.5$). It is interesting to note that at around $alpha = 0.5$, we get a very small bump in performance
 
 Even though we have to take fig. 1 with a grain of salt, we created this graph because we think it is an interesting way to present our results. I've read some new papers that deal with overlaying synthetic masks. This doesn't seem to be too much of a stretch for future work given the fact that we already have face landmarks.
 
