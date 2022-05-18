@@ -111,14 +111,14 @@ At first, we wanted to see if there is any built-in support in Unity for speech 
     <img src="https://chromestone.github.io/Advances-In-XR/results/baseline_affectnet_subset.jpg" alt="baseline_affectnet_subset" loading="lazy">
   </div>
   <div style="width:50%; float:left">
-    <img src="https://chromestone.github.io/Advances-In-XR/results/baseline_affectnet_augmented.jpg" alt="baseline_affectnet_augmented" loading="lazy">
+    <img src="https://chromestone.github.io/Advances-In-XR/results/finetuned_affectnet_subset.jpg" alt="baseline_affectnet_subset" loading="lazy">
   </div>
   <div style="clear:both; display:table;"></div>
 </div>
 
 <div>
   <div style="width:50%; float:left;">
-    <img src="https://chromestone.github.io/Advances-In-XR/results/finetuned_affectnet_subset.jpg" alt="baseline_affectnet_subset" loading="lazy">
+    <img src="https://chromestone.github.io/Advances-In-XR/results/baseline_affectnet_augmented.jpg" alt="baseline_affectnet_augmented" loading="lazy">
   </div>
   <div style="width:50%; float:left">
     <img src="https://chromestone.github.io/Advances-In-XR/results/finetuned_affectnet_augmented.jpg" alt="baseline_affectnet_augmented" loading="lazy">
@@ -126,9 +126,38 @@ At first, we wanted to see if there is any built-in support in Unity for speech 
   <div style="clear:both; display:table;"></div>
 </div>
 
-<img src="https://chromestone.github.io/Advances-In-XR/results/finetuned_affectnet_compressed.jpg" alt="finetuned_affectnet_compressed" loading="lazy">
+<div>
+  <div style="width:50%; float:left;">
+    <img src="https://chromestone.github.io/Advances-In-XR/results/baseline_affectnet_compressed.jpg" alt="finetuned_affectnet_compressed" loading="lazy">
+  </div>
+  <div style="width:50%; float:left">
+    <img src="https://chromestone.github.io/Advances-In-XR/results/finetuned_affectnet_compressed.jpg" alt="finetuned_affectnet_compressed" loading="lazy">
+  </div>
+  <div style="clear:both; display:table;"></div>
+</div>
 
 ### eyeFER in Practice
+
+"I was impressed with how consistently the app could predict my mood even with a mask on." - Garrett (UMD Computer Science Undergrad)
+
+"This is actually really useful." - Sahil M. (UMD Computer Science Undergrad)
+
+How useful would this app have been to your teaching in a masked classroom setting?
+
+* "4/5" - Dr. Raymond Tu (UMD FIRE Capital One Machine Learning Faculty Leader)
+* "4/5" - Dr. Stefan Doboszczak (UMD Department of Mathematics)
+
+Of course, we also report on negative results:
+
+What emotions does the model seem to get wrong when you wear a mask?
+
+* "Happiness" - Garrett
+* "All emotions, but it's expected" - Dr. Tu
+* "Irritated" - Dr. Doboszczak
+
+How useful would this app be once masking in classrooms becomes optional?
+
+"2/5" - Dr. Tu and Dr. Doboszczak
 
 ### Speech-to-Text Memo
 
