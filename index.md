@@ -87,44 +87,42 @@ Keep in mind that AffectNet has just 8 categories. Compare this to the performan
 
 We have to deal with the fact that we're creating a task, eye based face emotion recognition (eyeFER), that is even harder than an already hard task (FER)!
 
-Not only did we have challenges with the high level task itself, we had multiple implementation challenges.
+Not only did we have challenges with the high level task itself, we had multiple implementation challenges. We detail these below and their solutions follow later in this report.
 
-In particular, despite being advertised as mobile friendly, EfficientNet was over 10 times bigger than BlazeFace (Face Detection). That meant you could not call the entire model in one update loop. Luckily, Barracuda has support for manually calling each layer in the model.
-
-We tried a couple examples written by the authors of the library and found that they all still locked up the screen (such as using a co-routine). So we dug further into the documentation and used some inspirations from their example to create a new approach. In this new approach we budget compute using a precise Stopwatch and only call layers in the model if there is still time left for the current update call.
+First, despite being advertised as mobile friendly, EfficientNet was over 10 times bigger than BlazeFace (Face Detection). That meant you could not call the entire model in one update loop.
 
 Secondly, we are proud of our method for grabbing the camera frames (for input to our computer vision models).
 
-We tried using the XR ARSubsystem's CPU Image. The issue was that we couldn't easily align this image to the image rendered on screen (cropped and maybe zoomed in) (or rather we didn't want to think about that).
-
-Reverting our initial method introduced a problem where when we added an emoji to the world, that would get included in our model's input. So after 1 frame of visualization, the original face is no longer detected because it's occluded with an emoji.
-
-In the end we used two cameras with different culling masks to resolve this as shown below. Please note that although the final rendering of world objects is to a 2D Canvas, this **is** AR with depth. We are just handling the ordering of rendered objects manually. Doing so allows us to also exploit intermediate layers of rendering, which was vital for our method to work.
-
-<img src="https://chromestone.github.io/Advances-In-XR/screen_method.jpg" alt="Screen Method" width="500">
+At first we tried using the XR ARSubsystem's CPU Image. The issue was that we couldn't easily align this image to the image rendered on screen (cropped and maybe zoomed in) (or rather we didn't want to think about that).
 
 Thirdly, if we updated the world object too frequently (in depth estimation mode), (visually) it looked like as if it was the same thing as drawing on a 2D canvas. The solution was to use a exponential moving average to detect when new predictions started drifting from past predictions. (Simple Euclidean distance with thresholding).
 
 **Speech-To-Text:** Unity does not support native speech recognition.
 
 ### Future Work
-**eyeFER (sentiment detection):** <br />
+**Software Engineering and  FER/eyeFER:** <br />
 One aspect of the app we can definitely focus on is optimization. In practice, we've found that the phone can get hot and this high power draw cannot be good for battery life.
 
 For now this can be allievated by using a bigger heatsink, such as a device as big as an iPad (this also has the benefit of a larger screen to see the student's emotions). In the future, we hope that better hardware and software will increase the practicality of deep learning for mobile.
 
-There are also latency issues since we have to run such big models. Technically, we are not running this pipeline in real time.
+There are also latency issues since we have to run such big models on phones. The iPad would have more computer power and we should test our app's performance on various devices.
 
 With all these issues in mind, we could also consider running our big computer vision models in the cloud instead. However, the benefits of local compute is ease of scalability and privacy for the user.
 
-Secondly, we can consider using more realistic methods of augmentation or covering the lower part of the face. Since we already have face landmarks, I can do more research into how we can overlay various masks artificially over the face. This seeems very feasible given the fact that Snapchat has been able to do face filters for many years.
+Secondly, we can consider using more realistic methods of augmentation or covering the lower part of the face. Since we already have face landmarks, I can do more research into how we can overlay various masks artificially over the face. I've already come across a couple of papers that deal with overlaying synthetic masks. Given the fact that apps like Snapchat exist, I'm confident that this is a doable task.
 
 We could even use more deep learning to do this. There has been [work done the other way around](https://ieeexplore.ieee.org/abstract/document/9019697
 ) by (N. Din et. al.) that explores using GANs to generate a realistic face without the mask conditioned on a masked face. You could use this GAN's output to create a self-supervised task of undoing the mask removing.
 
-Thirdly, our depth estimation only works for a single face setting. This is because the library
+Thirdly, our depth estimation only works for a single face setting. We will describe the technical reason in the following paragraph.
 
-Lastly, it could be worthwhile exploring how to make FER models more robust to face pose and lighting positions. It's interesting that while keeping my face expression the same, I've found that just by varying head tilt the model can bounce around various emotions.
+Keijiro's MediaPipe ports use pre and post-processing steps that utilize shaders. Though Barracuda and the model supports batch processing, it's unclear how to batch that work with shaders.
+
+A simple method would be, for the input, use a for loop and concatentate the shader output for each image in the batch. Then, after executing the model, we can use another for loop and compute the shader for each batch slice individually.
+
+We can also look into homuler's [port of MediaPipe](https://github.com/homuler/MediaPipeUnityPlugin) that requires native compilation.
+
+Fourthly, it could be worthwhile exploring how to make FER models more robust to face pose and lighting positions. It's interesting that while keeping my face expression the same, I've found that just by varying head tilt the model can bounce around various emotions.
 
 Perhaps there is a way to create a loss function that enforces smoothness on various head angles (which might require face reconstruction) and lighting conditions. I would have to imagine such a method would be costly to compute.
 
@@ -151,14 +149,21 @@ As for eye based face emotion recognition, at the time of this writing, as far a
 
 **What Derek Did:**
 
-Software engineering
+Derek was in charge of both training, analyzing and deploying the models. For training and analysis, this was a machine learning problem done in Python. For deploying the models, this was a software engineering task done with Unity and C#.
 
-Get screen capture efficient so we can run models on input from camera on phone
+Next, I will detail our method for getting camera capture to work (somewhat) efficiently. We need this so we can feed the camera image as input to the neural networks in Unity.
+
+Reverting our initial method introduced a problem where when we added an emoji to the world, that would get included in our screen capture. So after 1 frame of visualization, the original face is no longer detected because it's occluded with an emoji.
+
+In the end we used two cameras with different culling masks to resolve this as shown below. Please note that although the final rendering of world objects is to a 2D Canvas, this **is** AR with depth. We are just handling the ordering of rendered objects manually. Doing so allowed us to exploit intermediate layers of rendering, which was vital for our method to work.
+
+<img src="https://chromestone.github.io/Advances-In-XR/screen_method.jpg" alt="Screen Method" width="500">
 
 Write the code to combine all of the models together into one flexible pipeline (with the option to turn off various models depending on the selected mode)
 
-Make it possible to run efficient net (budget compute)
+We were lucky that Barracuda has support for manually calling each layer in the model. This made it possible to run large models without locking up the application.
 
+We tried a couple examples written by the authors of the library and found that they all still locked up the screen (such as using a co-routine). So we dug further into the documentation and used some inspirations from their example to create a new approach. In this new approach we budget compute using a precise Stopwatch and only call layers in the model if there is still time left for the current update call.
 
 
 ### Iris Based Depth Estimation
@@ -221,11 +226,11 @@ When users want to retrieve their speech-to-text memo, they can click on the “
     <img src="https://chromestone.github.io/Advances-In-XR/results/tradeoff_zoomed.jpg" alt="tradeoff_zoomed" loading="lazy">
   </div>
   <div style="clear:both; display:table;"></div>
-  <b>Figure 1 - Left: Ensemble model using weighted average on baseline and finetuned. Right: Zoomed in on the peformance on the augmented dataset (to better show the shape and characteristics of the curve).</b>
+  <p><b>Figure 1 - Left: Ensemble model using weighted average on baseline and finetuned. Right: Zoomed in on the peformance on the augmented dataset (to better show the shape and characteristics of the curve).</b></p>
 </div>
 
 <img src="https://chromestone.github.io/Advances-In-XR/results/model_accuracy.png" alt="Model Accuracy" loading="lazy">
-<b>Figure 2 - Comparison of accuracies between the baseline and finetuned model on various dataset transformations. Note that the colored circles directly map to points in fig. 1.</b>
+<p><b>Figure 2 - Comparison of accuracies between the baseline and finetuned model on various dataset transformations. Note that the colored circles directly map to points in fig. 1.</b></p>
 
 <div>
   <div style="width:50%; float:left;">
@@ -235,7 +240,7 @@ When users want to retrieve their speech-to-text memo, they can click on the “
     <img src="https://chromestone.github.io/Advances-In-XR/results/finetuned_affectnet_subset.jpg" alt="baseline_affectnet_subset" loading="lazy">
   </div>
   <div style="clear:both; display:table;"></div>
-  <b>Figure 3 - Confusion matrices on the original AffectNet dataset. The margins show the row and column totals.</b>
+  <p><b>Figure 3 - Confusion matrices on the original AffectNet dataset. The margins show the row and column totals.</b></p>
 </div>
 
 <div>
@@ -246,7 +251,7 @@ When users want to retrieve their speech-to-text memo, they can click on the “
     <img src="https://chromestone.github.io/Advances-In-XR/results/finetuned_affectnet_augmented.jpg" alt="baseline_affectnet_augmented" loading="lazy">
   </div>
   <div style="clear:both; display:table;"></div>
-  <b>Figure 4 - Confusion matrices on the augmented dataset where the lower half of the face is removed.</b>
+  <p><b>Figure 4 - Confusion matrices on the augmented dataset where the lower half of the face is removed.</b></p>
 </div>
 
 <div>
@@ -257,22 +262,26 @@ When users want to retrieve their speech-to-text memo, they can click on the “
     <img src="https://chromestone.github.io/Advances-In-XR/results/finetuned_affectnet_compressed.jpg" alt="finetuned_affectnet_compressed" loading="lazy">
   </div>
   <div style="clear:both; display:table;"></div>
-  <b>Figure 5 - Confusion matrices on the augmented dataset where the lower half of the face is removed and evaluation with compressed emotions.</b>
+  <p><b>Figure 5 - Confusion matrices on the augmented dataset where the lower half of the face is removed and evaluation with compressed emotions.</b></p>
 </div>
 
 **Analysis**
 
 In figure 1, we weighted our baseline and finetuned model's output (predicted probabilities for the 8 emotions) by $\alpha$ and $1-\alpha$ repsectively to create an ensemble model.
 
-The blue curve in fig. 1 actually is to be expected. This curve represents our ensemble model's performance on the original AffectNet dataset. I hypothesis that our finetuned model performs so poorly because of how we augmented the dataset. By zero-ing out the lower half of the face, the feature activations related to the mouth and any lower part of the face are zero. This would be true all the way to the last layer, where our finetuning operates on. So when we perform gradient descent, the weighting on these features never gets any signal. Basically, the eye based features never learn to "play well" with the presence of mouth features.
+The blue curve in fig. 1 actually is to be expected. This curve represents our ensemble model's performance on the original AffectNet dataset. I hypothesis that our finetuned model performs so poorly because of how we augmented the dataset. By zero-ing out the lower half of the face, the feature activations related to the mouth and any lower part of the face are always zero. This would be true all the way to the last layer, where our finetuning operates on. So when we perform gradient descent, the weighting on these features never gets any signal. Basically, the eye based features never learn to "play well" with the presence of mouth features.
 
-Thus it is somewhat unfair to evaluate our finetuned model on the original dataset. And in practice, we argue that this usually isn't a problem since the presence of a face almost always means that we can perform landmark detection. So that means we can easily zero out the lower half of the face before feeding it into our finetuned model. This is how we implemented our eyeFER model in our app.
+Thus it is somewhat unfair to evaluate our finetuned model on the original dataset with full faces. And in practice, we argue that this full face problem isn't a problem at all. The presence of a face almost always means that we can perform landmark detection. So that means we can easily zero out the lower half of the face before feeding it into our finetuned model. Our eyeFER model will always get input similar to its training set, the augmented dataset. In our app, we always use face landmarking to zero out the lower half of the face before feeding the face into our eyeFER model.
 
 This does lead us to be curious. What if we also trained a mouthFER? Would ensembling such a model with eyeFER lead to even decent results? And would adding a finetuned layer (for cross eye/mouth feature relations) get us anywhere close to SOTA?
 
-The orange line in fig. 1 shows the ensemble performance on the augmented dataset. Though this is also somewhat of an unfair evaluation since the baseline has never been trained on the augmented dataset, we argue there is still value to this analysis. For one, this curve shows that the finetuned model contributes more to the performance on the augmented dataset than the baseline. We know this by comparing at the steepness on both sides of the curve (split at $\alpha = 0.5$). It is interesting to note that at around $alpha = 0.5$, we get a very small bump in performance
+The orange line in fig. 1 shows the ensemble performance on the augmented dataset. Though this is also somewhat of an unfair evaluation since the baseline has never been trained on the augmented dataset, we argue that there is still value to this analysis.
 
-Even though we have to take fig. 1 with a grain of salt, we created this graph because we think it is an interesting way to present our results. I've read some new papers that deal with overlaying synthetic masks. This doesn't seem to be too much of a stretch for future work given the fact that we already have face landmarks.
+For one, this curve shows that the finetuned model contributes more to the performance on the augmented dataset than the baseline. We know this by comparing the steepness on both sides of the curve (split at $\alpha = 0.5$). It is interesting to note that at around $alpha = 0.5$, we get a very small bump in performance.
+
+Secondly, we can also treat this analysis as what happens when we zero out activations for mouth related features. (Though it's less clear how this affects deep features that depend on both shallower eye and mouth features.)
+
+Even though we have to take fig. 1 with a grain of salt, we created this graph because we think it is an interesting way to present our results.
 
 ### eyeFER in Practice <a name="ePr"></a>
 
