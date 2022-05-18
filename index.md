@@ -15,6 +15,10 @@ Welcome to our Advances in XR (CMSC498F/CMSC838C) final project ***instructAR***
 * [Methodology](#method)
 * [Results & Analysis](#res)
   * [Demo](#demo)
+  * [eyeFER on Paper](#eP)
+  * [eyeFER in Practice](#ePr)
+  * [Speech-to-Text Memo](#spAn)
+  * [AR Student ID](#idAn)
 * [May 18th Project Presentation](#mmay)
 * [April 28th Project Progress Report](#a28)
 * [April 5th Project Proposal](#a5)
@@ -92,7 +96,7 @@ At first, we wanted to see if there is any built-in support in Unity for speech 
 <img src="https://user-images.githubusercontent.com/55725395/168929202-ab5fade5-7cd6-48f7-80d6-9f1148f24b26.gif" alt="AR Student ID" width="500">
 
 
-### eyeFER on Paper
+### eyeFER on Paper <a name="eP"></a>
 
 <div>
   <div style="width:50%; float:left;">
@@ -136,7 +140,7 @@ At first, we wanted to see if there is any built-in support in Unity for speech 
   <div style="clear:both; display:table;"></div>
 </div>
 
-### eyeFER in Practice
+### eyeFER in Practice <a name="ePr"></a>
 
 "I was impressed with how consistently the app could predict my mood even with a mask on." - Garrett (UMD Computer Science Undergrad)
 
@@ -159,7 +163,7 @@ How useful would this app be once masking in classrooms becomes optional?
 
 "2/5" - Dr. Tu and Dr. Doboszczak
 
-### Speech-to-Text Memo
+### Speech-to-Text Memo <a name="spAn"></a>
 
 * [Our website for speech-to-text memo](http://instructar.pythonanywhere.com/)
 * Analysis: We tested the speech recognition feature on the following variables: content complexity, speaker fluency, and with/without wearing masks. For content complexity, we have two scripts where one is just a casual note that does not involve any uncommon/professional vocabulary and another that contains special vocabularies used in the math field. For the casual script, the result for both speakers are around a high 90% accuracy (with and without wearing a mask). However, our second script had more complicated vocabularies like "Lipschitz" as well as homophones "R<sup>n</sup>" and "R<sup>m</sup>" where the letter "n" and "m" can be easily confused. Our result shows that the speech recognition has a lower accuracy for the speaker with accent in this context. Nonetheless, the speech recognition feature can precisely distinguish even "n" and "m" for the native English speaker. Finally, all test results showed that speech recognition with masks is more difficult than without masks. Future work such as denoising the raw audio file can be done in order to improve the accuracy rate. 
@@ -167,7 +171,7 @@ How useful would this app be once masking in classrooms becomes optional?
 <img width="703" alt="Screen Shot 2022-05-17 at 10 19 26 PM" src="https://user-images.githubusercontent.com/55725395/168944253-98a5f217-427f-43ad-ae47-c3c1a2625e80.png">
 <img width="703" alt="Screen Shot 2022-05-17 at 10 19 30 PM" src="https://user-images.githubusercontent.com/55725395/168944266-83e3e6d4-f26f-4da1-82e7-22ede0cacc84.png">
 
-### AR Student ID
+### AR Student ID <a name="idAn"></a>
 See [demo](#demo) in earlier section.
 
 ## May 18th Project Presentation <a name="mmay"></a>
