@@ -11,6 +11,7 @@ Welcome to our Advances in XR (CMSC498F/CMSC838C) final project ***instructAR***
   * [Problem Statement](#ps)
   * [Contributions](#contri)
   * [Challenges](#cha)
+  * [Future Work](#fut)
 * [Related Work](#rwork)
 * [Methodology](#method)
 * [Results & Analysis](#res)
@@ -65,7 +66,9 @@ If this works even half of the times, it could aid teachers in identifying when 
 * trained and analyzed deep learning models for FER/eyeFER
 * ported FER/eyeFER without locking up the app
 * added depth to our pipeline and the depth visualization (using a world space canvas).
+
 <br>
+
 **Chih-Yun Tseng**:
 * AR student ID
 * Speech-to-text feature
@@ -82,12 +85,32 @@ We have to deal with the fact that we're creating a task, eye based face emotion
 
 Not only did we have challenges with the high level task itself, we had multiple implementation challenges.
 
-In particular, despite being advertised as mobile friendly, EfficientNet was over 10 times bigger than BlazeFace (Face Detection). That meant you could not call the entire model in one update loop.
+In particular, despite being advertised as mobile friendly, EfficientNet was over 10 times bigger than BlazeFace (Face Detection). That meant you could not call the entire model in one update loop. Luckily, Barracuda has support for manually calling each layer in the model.
+
+We tried a couple examples written by the authors of the library and found that they all still locked up the screen (such as using a co-routine). So we dug further into the documentation and used some inspirations from their example to create a new approach. In this new approach we budget compute using a precise Stopwatch and only call layers in the model if there is still time left for the current update call.
+
+Secondly, we are proud of our method for grabbing the camera frames (for input to our computer vision models).
+
+We tried using the XR ARSubsystem's CPU Image. The issue was that we couldn't easily align this image to the image rendered on screen (cropped and maybe zoomed in) (or rather we didn't want to think about that).
+
+Reverting our initial method introduced a problem where when we added an emoji to the world, that would get included in our model's input. So after 1 frame of visualization, the original face is no longer detected because it's occluded with an emoji.
+
+In the end we used two cameras with different culling masks to resolve this as shown below. Please note that although the final rendering of world objects is to a 2D Canvas, this **is** AR with depth. We are just handling the ordering of rendered objects manually. Doing so allows us to also exploit intermediate layers of rendering, which was vital for our method to work.
+
+<img src="https://chromestone.github.io/Advances-In-XR/screen_method.jpg" alt="Screen Method" width="500">
 
 Lastly, if we updated the world object too frequently (in depth estimation mode), (visually) it looked like as if it was the same thing as drawing on a 2D canvas. The solution was to use a exponential moving average to detect when new predictions started drifting from past predictions. (Simple Euclidean distance with thresholding).
 
 * Speech-To-Text: Unity does not support native speech recognition.
 **TODO**
+
+### Future Work
+
+One aspect of the app we can definitely focus on is optimization. In practice, we've found that the phone can get hot and this high power draw cannot be good for battery life.
+
+For now this can be allievated by using a bigger heatsink, such as a device as big as an iPad (this also has the benefit of a larger screen to see the student's emotions). In the future, we hope that better hardware and software will increase the practicality of deep learning for mobile.
+
+We could also consider running our big computer vision models in the cloud instead. However, the benefits of local compute is ease of scalability and privacy for the user.
 
 ## Related Work <a name="rwork"></a>
 
@@ -107,6 +130,8 @@ As for the deep learning side, as far as I'm aware there isn't research on this.
 What I turned up by searching on Google Scholar were papers on the effect of masks on _humans_ performing face emotion recognition.
 
 **What Derek Did:**
+
+### Iris Based Depth Estimation
 
 ### AR Student ID 
 This is built with the Vuforia engine. Vuforia supports image tracking which is very helpful for this feature. We set our UMD student IDs as image targets and then created game objects in Unity that serve as our AR cards. 
@@ -154,7 +179,7 @@ At first, we wanted to see if there is any built-in support in Unity for speech 
 
 <div>
   <div style="width:50%; float:left;">
-    <img src="https://chromestone.github.io/Advances-In-XR/results/baseline_affectnet_subset.jpg" alt="baseline_affectnet_subset" loading="lazy" width="50%">
+    <img src="https://chromestone.github.io/Advances-In-XR/results/baseline_affectnet_subset.jpg" alt="baseline_affectnet_subset" loading="lazy">
   </div>
   <div style="width:50%; float:left">
     <img src="https://chromestone.github.io/Advances-In-XR/results/finetuned_affectnet_subset.jpg" alt="baseline_affectnet_subset" loading="lazy">
@@ -165,10 +190,10 @@ At first, we wanted to see if there is any built-in support in Unity for speech 
 
 <div>
   <div style="width:50%; float:left;">
-    <img src="https://chromestone.github.io/Advances-In-XR/results/baseline_affectnet_augmented.jpg" alt="baseline_affectnet_augmented" loading="lazy" width="50%">
+    <img src="https://chromestone.github.io/Advances-In-XR/results/baseline_affectnet_augmented.jpg" alt="baseline_affectnet_augmented" loading="lazy">
   </div>
   <div style="width:50%; float:left">
-    <img src="https://chromestone.github.io/Advances-In-XR/results/finetuned_affectnet_augmented.jpg" alt="baseline_affectnet_augmented" loading="lazy" width="50%">
+    <img src="https://chromestone.github.io/Advances-In-XR/results/finetuned_affectnet_augmented.jpg" alt="baseline_affectnet_augmented" loading="lazy">
   </div>
   <div style="clear:both; display:table;"></div>
   <b>Figure 4 - Confusion matrices on the augmented dataset where the lower half of the face is removed.</b>
@@ -176,10 +201,10 @@ At first, we wanted to see if there is any built-in support in Unity for speech 
 
 <div>
   <div style="width:50%; float:left;">
-    <img src="https://chromestone.github.io/Advances-In-XR/results/baseline_affectnet_compressed.jpg" alt="finetuned_affectnet_compressed" loading="lazy" width="50%">
+    <img src="https://chromestone.github.io/Advances-In-XR/results/baseline_affectnet_compressed.jpg" alt="finetuned_affectnet_compressed" loading="lazy">
   </div>
   <div style="width:50%; float:left">
-    <img src="https://chromestone.github.io/Advances-In-XR/results/finetuned_affectnet_compressed.jpg" alt="finetuned_affectnet_compressed" loading="lazy" width="50%">
+    <img src="https://chromestone.github.io/Advances-In-XR/results/finetuned_affectnet_compressed.jpg" alt="finetuned_affectnet_compressed" loading="lazy">
   </div>
   <div style="clear:both; display:table;"></div>
   <b>Figure 5 - Confusion matrices on the augmented dataset where the lower half of the face is removed and evaluation with compressed emotions.</b>
