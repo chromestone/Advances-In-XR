@@ -60,9 +60,17 @@ However, deep learning models have been shown to be able to perform incredible t
 If this works even half of the times, it could aid teachers in identifying when students are confused over a complex topic.
 
 ### Contributions <a name="contri"></a>
-**Derek Zhang**: integrated Keijiro's port of MediaPipe models (Face Detection, Face Landmarking, and Iris Landmarking) into our "pipeline", trained and analyzed deep learning models for FER/eyeFER, ported eyeFER/FER without locking up the app and added depth visualization to the app.
+**Derek Zhang**:
+* integrated Keijiro's port of MediaPipe models (Face Detection, Face Landmarking, and Iris Landmarking) into our "pipeline"
+* trained and analyzed deep learning models for FER/eyeFER
+* ported FER/eyeFER without locking up the app
+* added depth to our pipeline and the depth visualization (using a world space canvas).
 <br>
-**Chih-Yun Tseng**: AR student ID, Speech-to-text feature, emoji overlay for sentiment dectection (without depth), app UI.
+**Chih-Yun Tseng**:
+* AR student ID
+* Speech-to-text feature
+* emoji overlay for sentiment dectection (without depth)
+* app UI.
 
 ### Challenges <a name="cha"></a>
 
@@ -132,16 +140,16 @@ At first, we wanted to see if there is any built-in support in Unity for speech 
 
 <div>
   <div style="width:50%; float:left;">
-    <img src="https://chromestone.github.io/Advances-In-XR/results/tradeoffs.png" alt="Trade Offs" loading="lazy" width="50%">
+    <img src="https://chromestone.github.io/Advances-In-XR/results/tradeoffs.png" alt="Trade Offs" loading="lazy">
   </div>
   <div style="width:50%; float:left">
-    <img src="https://chromestone.github.io/Advances-In-XR/results/tradeoff_zoomed.jpg" alt="tradeoff_zoomed" loading="lazy" width="50%">
+    <img src="https://chromestone.github.io/Advances-In-XR/results/tradeoff_zoomed.jpg" alt="tradeoff_zoomed" loading="lazy">
   </div>
   <div style="clear:both; display:table;"></div>
   <b>Figure 1 - Left: Ensemble model using weighted average on baseline and finetuned. Right: Zoomed in on the peformance on the augmented dataset (to better show the shape and characteristics of the curve).</b>
 </div>
 
-<img src="https://chromestone.github.io/Advances-In-XR/results/model_accuracy.png" alt="Model Accuracy" loading="lazy" width="70%">
+<img src="https://chromestone.github.io/Advances-In-XR/results/model_accuracy.png" alt="Model Accuracy" loading="lazy">
 <b>Figure 2 - Comparison of accuracies between the baseline and finetuned model on various dataset transformations. Note that the colored circles directly map to points in fig. 1.</b>
 
 <div>
@@ -149,7 +157,7 @@ At first, we wanted to see if there is any built-in support in Unity for speech 
     <img src="https://chromestone.github.io/Advances-In-XR/results/baseline_affectnet_subset.jpg" alt="baseline_affectnet_subset" loading="lazy" width="50%">
   </div>
   <div style="width:50%; float:left">
-    <img src="https://chromestone.github.io/Advances-In-XR/results/finetuned_affectnet_subset.jpg" alt="baseline_affectnet_subset" loading="lazy" width="50%">
+    <img src="https://chromestone.github.io/Advances-In-XR/results/finetuned_affectnet_subset.jpg" alt="baseline_affectnet_subset" loading="lazy">
   </div>
   <div style="clear:both; display:table;"></div>
   <b>Figure 3 - Confusion matrices on the original AffectNet dataset. The margins show the row and column totals.</b>
@@ -176,6 +184,18 @@ At first, we wanted to see if there is any built-in support in Unity for speech 
   <div style="clear:both; display:table;"></div>
   <b>Figure 5 - Confusion matrices on the augmented dataset where the lower half of the face is removed and evaluation with compressed emotions.</b>
 </div>
+
+**Analysis**
+
+In figure 1, we weighted our baseline and finetuned model's output (predicted probabilities for the 8 emotions) by $\alpha$ and $1-\alpha$ repsectively to create an ensemble model.
+
+The blue curve in fig. 1 actually is to be expected. This curve represents our ensemble model's performance on the original AffectNet dataset. I hypothesis that our finetuned model performs so poorly because of how we augmented the dataset. By zero-ing out the lower half of the face, the feature activations related to the mouth and any lower part of the face are zero. This would be true all the way to the last layer, where our finetuning operates on. So when we perform gradient descent, the weighting on these features never gets any signal. Basically, the eye based features never learn to "play well" with the presence of mouth features.
+
+Thus it is somewhat unfair to evaluate our finetuned model on the original dataset. And in practice, we argue that this usually isn't a problem since the presence of a face almost always means that we can perform landmark detection. So that means we can easily zero out the lower half of the face before feeding it into our finetuned model. This is how we implemented our eyeFER model in our app.
+
+This does lead us to be curious. What if we also trained a mouthFER? Would ensembling such a model with eyeFER lead to even decent results? And would adding a finetuned layer (for cross eye/mouth feature relations) get us anywhere close to SOTA?
+
+Even though we have to take fig. 1 with a grain of salt, we created this graph because we think it is an interesting way to present our results. I've read some new papers that deal with overlaying synthetic masks. This doesn't seem to be too much of a stretch for future work given the fact that we already have face landmarks.
 
 ### eyeFER in Practice <a name="ePr"></a>
 
