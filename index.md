@@ -100,42 +100,42 @@ At first, we wanted to see if there is any built-in support in Unity for speech 
 
 <div>
   <div style="width:50%; float:left;">
-    <img src="https://chromestone.github.io/Advances-In-XR/results/tradeoffs.png" alt="Trade Offs" loading="lazy" width="70%">
+    <img src="https://chromestone.github.io/Advances-In-XR/results/tradeoffs.png" alt="Trade Offs" loading="lazy" width="50%">
   </div>
   <div style="width:50%; float:left">
-    <img src="https://chromestone.github.io/Advances-In-XR/results/tradeoff_zoomed.jpg" alt="tradeoff_zoomed" loading="lazy" width="70%">
+    <img src="https://chromestone.github.io/Advances-In-XR/results/tradeoff_zoomed.jpg" alt="tradeoff_zoomed" loading="lazy" width="50%">
   </div>
   <div style="clear:both; display:table;"></div>
 </div>
 
-<img src="https://chromestone.github.io/Advances-In-XR/results/model_accuracy.png" alt="Model Accuracy" loading="lazy" width="70%">
+<img src="https://chromestone.github.io/Advances-In-XR/results/model_accuracy.png" alt="Model Accuracy" loading="lazy" width="50%">
 
 <div>
   <div style="width:50%; float:left;">
-    <img src="https://chromestone.github.io/Advances-In-XR/results/baseline_affectnet_subset.jpg" alt="baseline_affectnet_subset" loading="lazy" width="70%">
+    <img src="https://chromestone.github.io/Advances-In-XR/results/baseline_affectnet_subset.jpg" alt="baseline_affectnet_subset" loading="lazy" width="50%">
   </div>
   <div style="width:50%; float:left">
-    <img src="https://chromestone.github.io/Advances-In-XR/results/finetuned_affectnet_subset.jpg" alt="baseline_affectnet_subset" loading="lazy" width="70%">
-  </div>
-  <div style="clear:both; display:table;"></div>
-</div>
-
-<div>
-  <div style="width:50%; float:left;">
-    <img src="https://chromestone.github.io/Advances-In-XR/results/baseline_affectnet_augmented.jpg" alt="baseline_affectnet_augmented" loading="lazy" width="70%">
-  </div>
-  <div style="width:50%; float:left">
-    <img src="https://chromestone.github.io/Advances-In-XR/results/finetuned_affectnet_augmented.jpg" alt="baseline_affectnet_augmented" loading="lazy" width="70%">
+    <img src="https://chromestone.github.io/Advances-In-XR/results/finetuned_affectnet_subset.jpg" alt="baseline_affectnet_subset" loading="lazy" width="50%">
   </div>
   <div style="clear:both; display:table;"></div>
 </div>
 
 <div>
   <div style="width:50%; float:left;">
-    <img src="https://chromestone.github.io/Advances-In-XR/results/baseline_affectnet_compressed.jpg" alt="finetuned_affectnet_compressed" loading="lazy" width="70%">
+    <img src="https://chromestone.github.io/Advances-In-XR/results/baseline_affectnet_augmented.jpg" alt="baseline_affectnet_augmented" loading="lazy" width="50%">
   </div>
   <div style="width:50%; float:left">
-    <img src="https://chromestone.github.io/Advances-In-XR/results/finetuned_affectnet_compressed.jpg" alt="finetuned_affectnet_compressed" loading="lazy" width="70%">
+    <img src="https://chromestone.github.io/Advances-In-XR/results/finetuned_affectnet_augmented.jpg" alt="baseline_affectnet_augmented" loading="lazy" width="50%">
+  </div>
+  <div style="clear:both; display:table;"></div>
+</div>
+
+<div>
+  <div style="width:50%; float:left;">
+    <img src="https://chromestone.github.io/Advances-In-XR/results/baseline_affectnet_compressed.jpg" alt="finetuned_affectnet_compressed" loading="lazy" width="50%">
+  </div>
+  <div style="width:50%; float:left">
+    <img src="https://chromestone.github.io/Advances-In-XR/results/finetuned_affectnet_compressed.jpg" alt="finetuned_affectnet_compressed" loading="lazy" width="50%">
   </div>
   <div style="clear:both; display:table;"></div>
 </div>
