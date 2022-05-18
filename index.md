@@ -86,6 +86,7 @@ At first, we wanted to see if there is any built-in support in Unity for speech 
 ## Results & Analysis <a name="res"></a>
 
 ### Demo <a name="demo"></a>
+* [Face Emotion Recognition Demo](https://youtu.be/2_4zIoR3mNc)
 * [Speech-to-text Youtube Demo](https://youtu.be/bBLVGbJORTQ)
 * AR Student ID 
 <img src="https://user-images.githubusercontent.com/55725395/168929202-ab5fade5-7cd6-48f7-80d6-9f1148f24b26.gif" alt="AR Student ID" width="500">
@@ -93,10 +94,39 @@ At first, we wanted to see if there is any built-in support in Unity for speech 
 
 ### eyeFER on Paper
 
-<img src="https://chromestone.github.io/Advances-In-XR/results/tradeoffs.png" alt="Trade Offs" loading="lazy">
+<div>
+  <div style="width:50%; float:left;">
+    <img src="https://chromestone.github.io/Advances-In-XR/results/tradeoffs.png" alt="Trade Offs" loading="lazy">
+  </div>
+  <div style="width:50%; float:left">
+    <img src="https://chromestone.github.io/Advances-In-XR/results/tradeoff_zoomed.jpg" alt="tradeoff_zoomed" loading="lazy">
+  </div>
+  <div style="clear:both; display:table;"></div>
+</div>
 
 <img src="https://chromestone.github.io/Advances-In-XR/results/model_accuracy.png" alt="Model Accuracy" loading="lazy">
 
+<div>
+  <div style="width:50%; float:left;">
+    <img src="https://chromestone.github.io/Advances-In-XR/results/baseline_affectnet_subset.jpg" alt="baseline_affectnet_subset" loading="lazy">
+  </div>
+  <div style="width:50%; float:left">
+    <img src="https://chromestone.github.io/Advances-In-XR/results/baseline_affectnet_augmented.jpg" alt="baseline_affectnet_augmented" loading="lazy">
+  </div>
+  <div style="clear:both; display:table;"></div>
+</div>
+
+<div>
+  <div style="width:50%; float:left;">
+    <img src="https://chromestone.github.io/Advances-In-XR/results/finetuned_affectnet_subset.jpg" alt="baseline_affectnet_subset" loading="lazy">
+  </div>
+  <div style="width:50%; float:left">
+    <img src="https://chromestone.github.io/Advances-In-XR/results/finetuned_affectnet_augmented.jpg" alt="baseline_affectnet_augmented" loading="lazy">
+  </div>
+  <div style="clear:both; display:table;"></div>
+</div>
+
+<img src="https://chromestone.github.io/Advances-In-XR/results/finetuned_affectnet_compressed.jpg" alt="finetuned_affectnet_compressed" loading="lazy">
 
 ### eyeFER in Practice
 
