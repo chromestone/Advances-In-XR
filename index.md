@@ -103,7 +103,7 @@ At first, we wanted to see if there is any built-in support in Unity for speech 
 ### Speech-to-Text Memo
 
 * [Our website for speech-to-text memo](http://instructar.pythonanywhere.com/)
-* Analysis: We tested the speech recognition feature on the following variances: content complexity, speaker fluency, and with/without mask. For content complexity, we have two context where one is just a casual note that does not involve any uncommon/professional vocabulary. The result for both speakers are around high 90% with and without wearing a mask. However, our second context had rare vocabulary like "Lipschitz" and R<sup>n</sup>/R<sup>m</sup> where "n" and "m" can be easily confused. Our result shows that the speech recognition has a lower accuracy for the speaker with accent. The speech recognition feature can precisely distinguish even "n" and "m" for the native English speaker.  
+* Analysis: We tested the speech recognition feature on the following variances: content complexity, speaker fluency, and with/without mask. For content complexity, we have two context where one is just a casual note that does not involve any uncommon/professional vocabulary. The result for both speakers are around high 90% with and without wearing a mask. However, our second context had rare vocabulary like "Lipschitz" and R<sup>n</sup>, R<sup>m</sup> where "n" and "m" can be easily confused. Our result shows that the speech recognition has a lower accuracy for the speaker with accent. The speech recognition feature can precisely distinguish even "n" and "m" for the native English speaker.  
 
 ## May 18th Project Presentation <a name="mmay"></a>
 To be updated.
