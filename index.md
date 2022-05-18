@@ -115,7 +115,7 @@ To be updated.
 
 ## Instructions <a name="inst"></a>
 1. When running the project on Xcode, be sure to run the entire build file (open from the root folder) and not just the xcodeproj file.
-2. ![Speech-To-Text_instruction](https://user-images.githubusercontent.com/55725395/168931265-c7b88d14-ca4e-4817-957d-d23359fe6ef2.png)
+2. <img src="https://user-images.githubusercontent.com/55725395/168931265-c7b88d14-ca4e-4817-957d-d23359fe6ef2.png" alt="SP Instruction" width="600">
 
 3. If you would like to perform queries on the database, please make sure that the specified email address and filename exists, and that the date is also relevant. By default, if an user only inputs their email address, they will receive all memos since May 1st 2022.
 
