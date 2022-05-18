@@ -102,10 +102,9 @@ In the end we used two cameras with different culling masks to resolve this as s
 Thirdly, if we updated the world object too frequently (in depth estimation mode), (visually) it looked like as if it was the same thing as drawing on a 2D canvas. The solution was to use a exponential moving average to detect when new predictions started drifting from past predictions. (Simple Euclidean distance with thresholding).
 
 * Speech-To-Text: Unity does not support native speech recognition.
-**TODO**
 
 ### Future Work
-
+**eyeFER (sentiment detection):*** <br />
 One aspect of the app we can definitely focus on is optimization. In practice, we've found that the phone can get hot and this high power draw cannot be good for battery life.
 
 For now this can be allievated by using a bigger heatsink, such as a device as big as an iPad (this also has the benefit of a larger screen to see the student's emotions). In the future, we hope that better hardware and software will increase the practicality of deep learning for mobile.
@@ -122,6 +121,9 @@ Lastly, it could be worthwhile exploring how to make FER models more robust to f
 Perhaps there is a way to create a loss function that enforces smoothness on various head angles (which might require face reconstruction) and lighting conditions. I would have to imagine such a method would be costly to compute.
 
 There are also datasets available for FER on videos. Using models that work with videos might help smooth out the predicted emotion. (Though we'd have to consider the computational cost given the limited compute budget on mobile devices.)
+
+**Speech-to-Text:** <br />
+Future work such as denoising the raw audio file can be done in order to improve the accuracy rate. 
 
 ## Related Work <a name="rwork"></a>
 
@@ -267,7 +269,7 @@ However, after reading papers analyzing the effect of face masks on various popu
 ### Speech-to-Text Memo <a name="spAn"></a>
 
 * [Our website for speech-to-text memo](http://instructar.pythonanywhere.com/)
-* Analysis: We tested the speech recognition feature on the following variables: content complexity, speaker fluency, and with/without wearing masks. For content complexity, we have two scripts where one is just a casual note that does not involve any uncommon/professional vocabulary and another that contains special vocabularies used in the math field. For the casual script, the result for both speakers are around a high 90% accuracy (with and without wearing a mask). However, our second script had more complicated vocabularies like "Lipschitz" as well as homophones "R<sup>n</sup>" and "R<sup>m</sup>" where the letter "n" and "m" can be easily confused. Our result shows that the speech recognition has a lower accuracy for the speaker with accent in this context. Nonetheless, the speech recognition feature can precisely distinguish even "n" and "m" for the native English speaker. Finally, all test results showed that speech recognition with masks is more difficult than without masks. Future work such as denoising the raw audio file can be done in order to improve the accuracy rate. 
+* Analysis: We tested the speech recognition feature on the following variables: content complexity, speaker fluency, and with/without wearing masks. For content complexity, we have two scripts where one is just a casual note that does not involve any uncommon/professional vocabulary and another that contains special vocabularies used in the math field. For the casual script, the result for both speakers are around a high 90% accuracy (with and without wearing a mask). However, our second script had more complicated vocabularies like "Lipschitz" as well as homophones "R<sup>n</sup>" and "R<sup>m</sup>" where the letter "n" and "m" can be easily confused. Our result shows that the speech recognition has a lower accuracy for the speaker with accent in this context. Nonetheless, the speech recognition feature can precisely distinguish even "n" and "m" for the native English speaker. Finally, all test results showed that speech recognition with masks is more difficult than without masks. 
 
 <img width="600" alt="Screen Shot 2022-05-17 at 10 19 26 PM" src="https://user-images.githubusercontent.com/55725395/168944253-98a5f217-427f-43ad-ae47-c3c1a2625e80.png">
 <img width="600" alt="Screen Shot 2022-05-17 at 10 19 30 PM" src="https://user-images.githubusercontent.com/55725395/168944266-83e3e6d4-f26f-4da1-82e7-22ede0cacc84.png">
@@ -276,7 +278,8 @@ However, after reading papers analyzing the effect of face masks on various popu
 See [demo](#demo) in earlier section.
 
 ## May 18th Project Presentation <a name="mmay"></a>
-To be updated.
+[498F_838c_final_project_presentation.pptx](https://github.com/chromestone/Advances-In-XR/files/8717484/498F_838c_final_project_presentation.pptx)
+
 
 ## April 28th Project Progress Report <a name="a28"></a>
 [498F/838c_final_project_progress_report.pdf](https://github.com/chromestone/Advances-In-XR/files/8585267/838c_final_project_progress_report.pdf)
