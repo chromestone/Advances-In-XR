@@ -99,7 +99,7 @@ In the end we used two cameras with different culling masks to resolve this as s
 
 <img src="https://chromestone.github.io/Advances-In-XR/screen_method.jpg" alt="Screen Method" width="500">
 
-Lastly, if we updated the world object too frequently (in depth estimation mode), (visually) it looked like as if it was the same thing as drawing on a 2D canvas. The solution was to use a exponential moving average to detect when new predictions started drifting from past predictions. (Simple Euclidean distance with thresholding).
+Thirdly, if we updated the world object too frequently (in depth estimation mode), (visually) it looked like as if it was the same thing as drawing on a 2D canvas. The solution was to use a exponential moving average to detect when new predictions started drifting from past predictions. (Simple Euclidean distance with thresholding).
 
 * Speech-To-Text: Unity does not support native speech recognition.
 **TODO**
@@ -111,6 +111,17 @@ One aspect of the app we can definitely focus on is optimization. In practice, w
 For now this can be allievated by using a bigger heatsink, such as a device as big as an iPad (this also has the benefit of a larger screen to see the student's emotions). In the future, we hope that better hardware and software will increase the practicality of deep learning for mobile.
 
 We could also consider running our big computer vision models in the cloud instead. However, the benefits of local compute is ease of scalability and privacy for the user.
+
+Secondly, we can consider using more realistic methods of augmentation or covering the lower part of the face. Since we already have face landmarks, I can do more research into how we can overlay various masks artificially over the face. This seeems very feasible given the fact that Snapchat has been able to do face filters for many years.
+
+We could even use more deep learning to do this. There has been [work done the other way around](https://ieeexplore.ieee.org/abstract/document/9019697
+) by (N. Din et. al.) that explores using GANs to generate a realistic face without the mask conditioned on a masked face. You could use this GAN's output to create a self-supervised task of undoing the mask removing.
+
+Lastly, it could be worthwhile exploring how to make FER models more robust to face pose and lighting positions. It's interesting that while keeping my face expression the same, I've found that just by varying head tilt the model can bounce around various emotions.
+
+Perhaps there is a way to create a loss function that enforces smoothness on various head angles (which might require face reconstruction) and lighting conditions. I would have to imagine such a method would be costly to compute.
+
+There are also datasets available for FER on videos. Using models that work with videos might help smooth out the predicted emotion. (Though we'd have to consider the computational cost given the limited compute budget on mobile devices.)
 
 ## Related Work <a name="rwork"></a>
 
