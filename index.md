@@ -51,7 +51,7 @@ _Lastly, we also support the speech recognition feature that transcribes importa
 3. **Speak-into-text memo:** Many times, teachers ask students to "Remind me after class" or "Remind me on Piazza" if a question arouses during lecture. However, this usually causes both parties to forget about the reminder. Our app aims to enable the speak-into-text feature for teachers to transcribe in-class announcements into text memos.
 
 ### Problem Statement <a name="ps"></a>
-* **Face Emotion Recognition (FER):** <br />
+**Face Emotion Recognition (FER):** <br />
 The COVID-19 pandemic has caused an unprecendent number of individuals to begin wearing masks on a regular basis whether it be for regulatory or personal reasons. In the classroom setting, teachers rely on student's facial expression for cues on whether if students are understanding the lecture or not. In a masked classroom setting, face emotion recognition becomes challenging for the instructor.
 
 However, deep learning models have been shown to be able to perform incredible tasks when given enough data. Thus, we want to investigate:
@@ -60,7 +60,7 @@ However, deep learning models have been shown to be able to perform incredible t
 
 If this works even half of the times, it could aid teachers in identifying when students are confused over a complex topic.
 
-* **Speech-to-Text Memo:** <br />
+**Speech-to-Text Memo:** <br />
 It is often times difficult for instructors to jot down reminders during class time especially if they are teaching with a blackboard. Switching between a pen and a chalk can get messy and annoying when the class is at a fast pace. Therefore, it would be very helpful if teachers can just record whatever they would like to keep a note of and retrieve the memo via their email (so that it would not get lost).
 
 ### Contributions <a name="contri"></a>
@@ -79,7 +79,7 @@ It is often times difficult for instructors to jot down reminders during class t
 * app UI.
 
 ### Challenges <a name="cha"></a>
-* **Face Emotion Recognition (FER):** <br />
+**Face Emotion Recognition (FER):** <br />
 Face Emotion Recognition (FER) is a challenging task. In particular, the highest accuracy on AffectNet is 62.42% at the time of writing this report [(source)](https://paperswithcode.com/sota/facial-expression-recognition-on-affectnet).
 
 Keep in mind that AffectNet has just 8 categories. Compare this to the performance on ImageNet, which has thousands of categories. Deep learning methods have already acheived over 90% top-1 accuracy on ImageNet [(source)](https://paperswithcode.com/sota/image-classification-on-imagenet).
@@ -104,10 +104,10 @@ In the end we used two cameras with different culling masks to resolve this as s
 
 Thirdly, if we updated the world object too frequently (in depth estimation mode), (visually) it looked like as if it was the same thing as drawing on a 2D canvas. The solution was to use a exponential moving average to detect when new predictions started drifting from past predictions. (Simple Euclidean distance with thresholding).
 
-* **Speech-To-Text:** Unity does not support native speech recognition.
+**Speech-To-Text:** Unity does not support native speech recognition.
 
 ### Future Work
-* **eyeFER (sentiment detection):** <br />
+**eyeFER (sentiment detection):** <br />
 One aspect of the app we can definitely focus on is optimization. In practice, we've found that the phone can get hot and this high power draw cannot be good for battery life.
 
 For now this can be allievated by using a bigger heatsink, such as a device as big as an iPad (this also has the benefit of a larger screen to see the student's emotions). In the future, we hope that better hardware and software will increase the practicality of deep learning for mobile.
@@ -125,7 +125,7 @@ Perhaps there is a way to create a loss function that enforces smoothness on var
 
 There are also datasets available for FER on videos. Using models that work with videos might help smooth out the predicted emotion. (Though we'd have to consider the computational cost given the limited compute budget on mobile devices.)
 
-* **Speech-to-Text:** <br />
+**Speech-to-Text:** <br />
 Future work such as denoising the raw audio file can be done in order to improve the accuracy rate. 
 
 ## Related Work <a name="rwork"></a>
