@@ -51,14 +51,33 @@ _Lastly, we also support the speech recognition feature that transcribes importa
 
 ### Problem Statement <a name="ps"></a>
 
-**TODO**
+The COVID-19 pandemic has caused an unprecendent number of individuals to begin wearing masks on a regular basis whether it be for regulatory or personal reasons. In the classroom setting, teachers rely on student's facial expression for cues on whether if students are understanding the lecture or not. In a masked classroom setting, face emotion recognition becomes challenging for the instructor.
+
+However, deep learning models have been shown to be able to perform incredible tasks when given enough data. Thus, we want to investigate:
+
+**How well can deep learning models perform on face emotion recognition without information about the lower half of the face, namely, the mouth?**
+
+If this works even half of the times, it could aid teachers in identifying when students are confused over a complex topic.
 
 ### Contributions <a name="contri"></a>
-**Derek Zhang**: 
+**Derek Zhang**: integrated Keijiro's port of MediaPipe models (Face Detection, Face Landmarking, and Iris Landmarking) into our "pipeline", trained and analyzed deep learning models for FER/eyeFER, ported eyeFER/FER without locking up the app and added depth visualization to the app.
 <br>
 **Chih-Yun Tseng**: AR student ID, Speech-to-text feature, emoji overlay for sentiment dectection (without depth), app UI.
 
 ### Challenges <a name="cha"></a>
+
+Face Emotion Recognition (FER) is a challenging task. In particular, the highest accuracy on AffectNet is 62.42% at the time of writing this report [(source)](https://paperswithcode.com/sota/facial-expression-recognition-on-affectnet).
+
+Keep in mind that AffectNet has just 8 categories. Compare this to the performance on ImageNet, which has thousands of categories. Deep learning methods have already acheived over 90% top-1 accuracy on ImageNet [(source)](https://paperswithcode.com/sota/image-classification-on-imagenet).
+
+We have to deal with the fact that we're creating a task, eye based face emotion recognition (eyeFER), that is even harder than an already hard task (FER)!
+
+Not only did we have challenges with the high level task itself, we had multiple implementation challenges.
+
+In particular, despite being advertised as mobile friendly, EfficientNet was over 10 times bigger than BlazeFace (Face Detection). That meant you could not call the entire model in one update loop.
+
+Lastly, if we updated the world object too frequently (in depth estimation mode), (visually) it looked like as if it was the same thing as drawing on a 2D canvas. The solution was to use a exponential moving average to detect when new predictions started drifting from past predictions. (Simple Euclidean distance with thresholding).
+
 * Speech-To-Text: Unity does not support native speech recognition.
 **TODO**
 
@@ -98,6 +117,19 @@ At first, we wanted to see if there is any built-in support in Unity for speech 
 
 ### eyeFER on Paper <a name="eP"></a>
 
+**Terminology**
+
+* AffectNet - The original dataset (we used a subset that was publicly available). All other AffectNet datasets types mentioned are created by transforming this dataset in some way.
+* Augmented - We performed face landmarking on the images in the dataset and zero-ed out the pixels below the nose line.
+* Compressed - The emotions are redefined as follows:
+  * activated - fear or surprise
+  * irritated - anger or disgust
+  * neutral - neutral or contempt
+  * happiness - happiness
+  * sadness - sadness
+
+**Figures**
+
 <div>
   <div style="width:50%; float:left;">
     <img src="https://chromestone.github.io/Advances-In-XR/results/tradeoffs.png" alt="Trade Offs" loading="lazy" width="70%">
@@ -106,9 +138,11 @@ At first, we wanted to see if there is any built-in support in Unity for speech 
     <img src="https://chromestone.github.io/Advances-In-XR/results/tradeoff_zoomed.jpg" alt="tradeoff_zoomed" loading="lazy" width="70%">
   </div>
   <div style="clear:both; display:table;"></div>
+  <b>Figure 1 - Left: Ensemble model using weighted average on baseline and finetuned. Right: Zoomed in on the peformance on the augmented dataset (to better show the shape and characteristics of the curve).</b>
 </div>
 
 <img src="https://chromestone.github.io/Advances-In-XR/results/model_accuracy.png" alt="Model Accuracy" loading="lazy" width="70%">
+<b>Figure 2 - Comparison of accuracies between the baseline and finetuned model on various dataset transformations. Note that the colored circles directly map to points in fig. 1.</b>
 
 <div>
   <div style="width:50%; float:left;">
@@ -118,6 +152,7 @@ At first, we wanted to see if there is any built-in support in Unity for speech 
     <img src="https://chromestone.github.io/Advances-In-XR/results/finetuned_affectnet_subset.jpg" alt="baseline_affectnet_subset" loading="lazy" width="70%">
   </div>
   <div style="clear:both; display:table;"></div>
+  <b>Figure 3 - Confusion matrices on the original AffectNet dataset. The margins show the row and column totals.</b>
 </div>
 
 <div>
@@ -128,6 +163,7 @@ At first, we wanted to see if there is any built-in support in Unity for speech 
     <img src="https://chromestone.github.io/Advances-In-XR/results/finetuned_affectnet_augmented.jpg" alt="baseline_affectnet_augmented" loading="lazy" width="70%">
   </div>
   <div style="clear:both; display:table;"></div>
+  <b>Figure 4 - Confusion matrices on the augmented dataset where the lower half of the face is removed.</b>
 </div>
 
 <div>
@@ -138,30 +174,39 @@ At first, we wanted to see if there is any built-in support in Unity for speech 
     <img src="https://chromestone.github.io/Advances-In-XR/results/finetuned_affectnet_compressed.jpg" alt="finetuned_affectnet_compressed" loading="lazy" width="70%">
   </div>
   <div style="clear:both; display:table;"></div>
+  <b>Figure 5 - Confusion matrices on the augmented dataset where the lower half of the face is removed and evaluation with compressed emotions.</b>
 </div>
 
 ### eyeFER in Practice <a name="ePr"></a>
+
+**Student Testimonies**
 
 "I was impressed with how consistently the app could predict my mood even with a mask on." - Garrett (UMD Computer Science Undergrad)
 
 "This is actually really useful." - Sahil M. (UMD Computer Science Undergrad)
 
-How useful would this app have been to your teaching in a masked classroom setting?
+**Feedback from Professionals**
+
+_How useful would this app have been to your teaching in a masked classroom setting?_
 
 * "4/5" - Dr. Raymond Tu (UMD FIRE Capital One Machine Learning Faculty Leader)
 * "4/5" - Dr. Stefan Doboszczak (UMD Department of Mathematics)
 
 Of course, we also report on negative results:
 
-What emotions does the model seem to get wrong when you wear a mask?
+_What emotions does the model seem to get wrong when you wear a mask?_
 
 * "Happiness" - Garrett
 * "All emotions, but it's expected" - Dr. Tu
 * "Irritated" - Dr. Doboszczak
 
-How useful would this app be once masking in classrooms becomes optional?
+_How useful would this app be once masking in classrooms becomes optional?_
 
 "2/5" - Dr. Tu and Dr. Doboszczak
+
+It's clear that once the pandemic has abated, eyeFER will not be very useful in all but the most niche scenarios.
+
+However, after reading papers analyzing the effect of face masks on various populations such as [individuals with autistic traits](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0257740), I've realized that we may be able to flip this technology around. Hence, I remain hopeful that, even if no teachers want to use our app post pandemic, we can use this to help students with mental disorders.
 
 ### Speech-to-Text Memo <a name="spAn"></a>
 
@@ -204,5 +249,6 @@ To be updated.
 3. Sentiment Detection Model
    * [Affectnet Dataset](http://mohammadmahoor.com/affectnet/)
    * [Affectnet Subset (that we actually used)](https://www.kaggle.com/datasets/mouadriali/affectnetsample)
+   * Face Emotion Recognition by A. Savchenko: [paper](https://arxiv.org/abs/2103.17107) and [code](https://github.com/HSE-asavchenko/face-emotion-recognition).
    * Keijiro's ports of MediaPipe to Unity using the Barracuda library: [BlazeFace](https://github.com/keijiro/BlazeFaceBarracuda), [Face Landmark](https://github.com/keijiro/FaceLandmarkBarracuda), and [Iris Landmark](https://github.com/keijiro/IrisBarracuda).
    * [MediaPipe ](https://google.github.io/mediapipe/)  (mainly for the face landmark model which we used to create the augmented dataset) and their [GitHub](https://github.com/google/mediapipe) where we found math for iris size to depth.
