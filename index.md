@@ -132,10 +132,10 @@ At first, we wanted to see if there is any built-in support in Unity for speech 
 
 <div>
   <div style="width:50%; float:left;">
-    <img src="https://chromestone.github.io/Advances-In-XR/results/tradeoffs.png" alt="Trade Offs" loading="lazy" width="70%">
+    <img src="https://chromestone.github.io/Advances-In-XR/results/tradeoffs.png" alt="Trade Offs" loading="lazy" width="50%">
   </div>
   <div style="width:50%; float:left">
-    <img src="https://chromestone.github.io/Advances-In-XR/results/tradeoff_zoomed.jpg" alt="tradeoff_zoomed" loading="lazy" width="70%">
+    <img src="https://chromestone.github.io/Advances-In-XR/results/tradeoff_zoomed.jpg" alt="tradeoff_zoomed" loading="lazy" width="50%">
   </div>
   <div style="clear:both; display:table;"></div>
   <b>Figure 1 - Left: Ensemble model using weighted average on baseline and finetuned. Right: Zoomed in on the peformance on the augmented dataset (to better show the shape and characteristics of the curve).</b>
@@ -146,10 +146,10 @@ At first, we wanted to see if there is any built-in support in Unity for speech 
 
 <div>
   <div style="width:50%; float:left;">
-    <img src="https://chromestone.github.io/Advances-In-XR/results/baseline_affectnet_subset.jpg" alt="baseline_affectnet_subset" loading="lazy" width="70%">
+    <img src="https://chromestone.github.io/Advances-In-XR/results/baseline_affectnet_subset.jpg" alt="baseline_affectnet_subset" loading="lazy" width="50%">
   </div>
   <div style="width:50%; float:left">
-    <img src="https://chromestone.github.io/Advances-In-XR/results/finetuned_affectnet_subset.jpg" alt="baseline_affectnet_subset" loading="lazy" width="70%">
+    <img src="https://chromestone.github.io/Advances-In-XR/results/finetuned_affectnet_subset.jpg" alt="baseline_affectnet_subset" loading="lazy" width="50%">
   </div>
   <div style="clear:both; display:table;"></div>
   <b>Figure 3 - Confusion matrices on the original AffectNet dataset. The margins show the row and column totals.</b>
@@ -157,10 +157,10 @@ At first, we wanted to see if there is any built-in support in Unity for speech 
 
 <div>
   <div style="width:50%; float:left;">
-    <img src="https://chromestone.github.io/Advances-In-XR/results/baseline_affectnet_augmented.jpg" alt="baseline_affectnet_augmented" loading="lazy" width="70%">
+    <img src="https://chromestone.github.io/Advances-In-XR/results/baseline_affectnet_augmented.jpg" alt="baseline_affectnet_augmented" loading="lazy" width="50%">
   </div>
   <div style="width:50%; float:left">
-    <img src="https://chromestone.github.io/Advances-In-XR/results/finetuned_affectnet_augmented.jpg" alt="baseline_affectnet_augmented" loading="lazy" width="70%">
+    <img src="https://chromestone.github.io/Advances-In-XR/results/finetuned_affectnet_augmented.jpg" alt="baseline_affectnet_augmented" loading="lazy" width="50%">
   </div>
   <div style="clear:both; display:table;"></div>
   <b>Figure 4 - Confusion matrices on the augmented dataset where the lower half of the face is removed.</b>
@@ -168,10 +168,10 @@ At first, we wanted to see if there is any built-in support in Unity for speech 
 
 <div>
   <div style="width:50%; float:left;">
-    <img src="https://chromestone.github.io/Advances-In-XR/results/baseline_affectnet_compressed.jpg" alt="finetuned_affectnet_compressed" loading="lazy" width="70%">
+    <img src="https://chromestone.github.io/Advances-In-XR/results/baseline_affectnet_compressed.jpg" alt="finetuned_affectnet_compressed" loading="lazy" width="50%">
   </div>
   <div style="width:50%; float:left">
-    <img src="https://chromestone.github.io/Advances-In-XR/results/finetuned_affectnet_compressed.jpg" alt="finetuned_affectnet_compressed" loading="lazy" width="70%">
+    <img src="https://chromestone.github.io/Advances-In-XR/results/finetuned_affectnet_compressed.jpg" alt="finetuned_affectnet_compressed" loading="lazy" width="50%">
   </div>
   <div style="clear:both; display:table;"></div>
   <b>Figure 5 - Confusion matrices on the augmented dataset where the lower half of the face is removed and evaluation with compressed emotions.</b>
