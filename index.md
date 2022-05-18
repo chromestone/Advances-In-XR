@@ -287,8 +287,7 @@ However, after reading papers analyzing the effect of face masks on various popu
 See [demo](#demo) in earlier section.
 
 ## May 18th Project Presentation <a name="mmay"></a>
-[498F_838c_final_project_presentation.pptx](https://github.com/chromestone/Advances-In-XR/files/8717484/498F_838c_final_project_presentation.pptx)
-
+[498F_838c_final_project_presentation.pptx](https://github.com/chromestone/Advances-In-XR/files/8718822/498F_838c_final_project_presentation.1.pptx)
 
 ## April 28th Project Progress Report <a name="a28"></a>
 [498F/838c_final_project_progress_report.pdf](https://github.com/chromestone/Advances-In-XR/files/8585267/838c_final_project_progress_report.pdf)
