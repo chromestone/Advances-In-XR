@@ -95,7 +95,7 @@ Secondly, we are proud of our method for grabbing the camera frames (for input t
 
 At first we tried using the XR ARSubsystem's CPU Image. The issue was that we couldn't easily align this image to the image rendered on screen (cropped and maybe zoomed in) (or rather we didn't want to think about that).
 
-Thirdly, if we updated the world object too frequently (in depth estimation mode), (visually) it looked like as if it was the same thing as drawing on a 2D canvas. The solution was to use a exponential moving average to detect when new predictions started drifting from past predictions. (Simple Euclidean distance with thresholding).
+Thirdly, if we updated the world object too frequently (in depth estimation mode), (visually) it looked like as if it was the same thing as drawing on a 2D canvas.
 
 **Speech-To-Text:** Unity does not support native speech recognition.
 
@@ -151,13 +151,39 @@ As for eye based face emotion recognition, at the time of this writing, as far a
 
 Derek was in charge of both training, analyzing and deploying the models. For training and analysis, this was a machine learning problem done in Python. For deploying the models, this was a software engineering task done with Unity and C#.
 
-Next, I will detail our method for getting camera capture to work (somewhat) efficiently. We need this so we can feed the camera image as input to the neural networks in Unity.
+First, I will document the technical details of preparing the dataset and training our model. All of the code is included in our GitHub repo under FinalProjectML.
 
-Reverting our initial method introduced a problem where when we added an emoji to the world, that would get included in our screen capture. So after 1 frame of visualization, the original face is no longer detected because it's occluded with an emoji.
+To create our augmented dataset, we used the MediaPipe library for face landmarking.
 
-In the end we used two cameras with different culling masks to resolve this as shown below. Please note that although the final rendering of world objects is to a 2D Canvas, this **is** AR with depth. We are just handling the ordering of rendered objects manually. Doing so allowed us to exploit intermediate layers of rendering, which was vital for our method to work.
+You can find their implementation on [this repo](https://github.com/tensorflow/tfjs-models/tree/master/face-landmarks-detection).
 
-<img src="https://chromestone.github.io/Advances-In-XR/screen_method.jpg" alt="Screen Method" width="500">
+We iterated over the original AffectNet dataset, ran this face landmarking for each image, and then stored the landmarks to disk.
+
+Zero-ing out the lower half of the face can be done on the fly efficiently using numpy broadcasting. Hence, our data loader is responsible for loading in the images and using its precomputed landmarks to zero-out the lower half of the face.
+
+We chose the nose point to be landmark #5 because it looked good. Masks worn properly cover part of the nose and this point seemed to be close to where the top of a mask would be.
+
+<img src="https://chromestone.github.io/Advances-In-XR/mesh_map.jpg" alt="keypoints_map" style="width:25%">
+
+MediaPipe FaceMesh Keypoints obtained from [their repo](https://github.com/tensorflow/tfjs-models/tree/master/face-landmarks-detection).
+
+<img src="https://chromestone.github.io/Advances-In-XR/results/masked_face_landmarking.jpg" alt="masked_face_landmarking" loading="lazy" style="width:50%">
+
+Not only do we see in the above image that we are approximately zero-ing out the right area, we also see that face landmarking works for masked faces.
+
+Lastly, the only other important detail is zero-ing out the face. Although we use the term zero-ing out, properly trained deep learning models always normalize their inputs. In this case, the model obtained from A. Savchenko's [repo](https://github.com/HSE-asavchenko/face-emotion-recognition) used z-score normalization: $\frac{x - \mu}{\sigma}$. We used the fact that after this normalization, the mean is mapped to zero. The mean was approximately RGB=(124, 116, 104). This is the color we actually used to zero-out the lower half of the face.
+
+For this project, one consideration for zero-ing out the face rather than overlaying a synthetic mask was the ease of implementation. It's trivial to implement in Python using numpy AND it's as simple as setting a section of a Color array in Unity to a specific Color. We wanted to focus on testing the concept of eyeFER rather than being mired in porting Python pre-processing into Unity.
+
+For training our model, we based our methodology off of A. Savchenko's [paper](https://arxiv.org/abs/2103.17107). In this paper, Savchenko first trained the model on auxillary tasks such as face recognition. Then, Savchenko finetuned this model on AffectNet.
+
+Specifically Savchenko split finetuning into two stages. First, Savchenko trained the last dense layer (the classifier) with all other weights frozen for 3 epochs. Second, Savchenko trained the entire model (unfrozen) for 10 epochs.
+
+how many epochs and cite Savchenko
+
+Mention ONNX format to barracuda
+
+
 
 Write the code to combine all of the models together into one flexible pipeline (with the option to turn off various models depending on the selected mode)
 
@@ -178,9 +204,19 @@ use predicted depth to visualize
 
 figure out a way to not update game object pos as much
 
+ The solution was to use a exponential moving average to detect when new predictions started drifting from past predictions. (Simple Euclidean distance with thresholding).
+
 software engineering
 
 make it so that world objects don't interfere with capture by using culling mask
+
+Next, I will detail our method for getting camera capture to work (somewhat) efficiently. We need this so we can feed the camera image as input to the neural networks in Unity.
+
+Reverting our initial method introduced a problem where when we added an emoji to the world, that would get included in our screen capture. So after 1 frame of visualization, the original face is no longer detected because it's occluded with an emoji.
+
+In the end we used two cameras with different culling masks to resolve this as shown below. Please note that although the final rendering of world objects is to a 2D Canvas, this **is** AR with depth. We are just handling the ordering of rendered objects manually. Doing so allowed us to exploit intermediate layers of rendering, which was vital for our method to work.
+
+<img src="https://chromestone.github.io/Advances-In-XR/screen_method.jpg" alt="Screen Method" width="100%" loading="lazy">
 
 ### AR Student ID 
 This is built with the Vuforia engine. Vuforia supports image tracking which is very helpful for this feature. We set our UMD student IDs as image targets and then created game objects in Unity that serve as our AR cards. 
@@ -284,6 +320,8 @@ Secondly, we can also treat this analysis as what happens when we zero out activ
 Even though we have to take fig. 1 with a grain of salt, we created this graph because we think it is an interesting way to present our results.
 
 ### eyeFER in Practice <a name="ePr"></a>
+
+So far we've only mentioned how we believe, in theory, that our finetuned model works. In this section, we present feedback obtained in the field and from **real** people.
 
 **Student Testimonies**
 
