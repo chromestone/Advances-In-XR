@@ -141,7 +141,7 @@ Future work such as denoising the raw audio file can be done in order to improve
 
 **What has already been done:**
 
-(Barracuda)[https://docs.unity3d.com/Packages/com.unity.barracuda@3.0/manual/index.html] is a "neural network inference library" that is the heart and soul of the project. It allowed us to run neural networks in Unity.
+[Barracuda](https://docs.unity3d.com/Packages/com.unity.barracuda@3.0/manual/index.html) is a "neural network inference library" that is the heart and soul of the project. It allowed us to run neural networks in Unity.
 
 First, as far as libraries and SDKs that are free, we haven't found any library more general than Barracuda for neural network deployment onto Unity. And as far as we're aware, a port of MediaPipe into Unity is the best option. Mediapipe can handle everything up to face emotion recognition. Specifically, we use Keijiro's port of three MediaPipe models: Face Detection, Face Landmarking, and Iris Landmarking.
 
@@ -173,7 +173,7 @@ MediaPipe FaceMesh Keypoints obtained from [their repo](https://github.com/tenso
 
 Not only do we see in the above image that we are approximately zero-ing out the right area, but we also see that face landmarking works for masked faces.
 
-Lastly, the only other important detail is zero-ing out the face. Although we use the term zero-ing out, properly trained deep learning models always normalize their inputs. In this case, the model obtained from A. Savchenko's [repo](https://github.com/HSE-asavchenko/face-emotion-recognition) used z-score normalization: $(x - \mu)/\sigma$. We used the fact that after this normalization, the mean is mapped to zero. The mean was approximately RGB=(124, 116, 104). This is the color we actually used to zero-out the lower half of the face.
+Lastly, the only other important detail is zero-ing out the face. Although we use the term zero-ing out, properly trained deep learning models always normalize their inputs. In this case, the model obtained from A. Savchenko's [repo](https://github.com/HSE-asavchenko/face-emotion-recognition) used z-score normalization: (x−μ)/σ. We used the fact that after this normalization, the mean is mapped to zero. The mean was approximately RGB=(124, 116, 104). This is the color we actually used to zero-out the lower half of the face.
 
 For this project, one consideration for zero-ing out the face rather than overlaying a synthetic mask was the ease of implementation. It's trivial to implement in Python using numpy AND it's as simple as setting a section of a Color array in Unity to a specific Color. We wanted to focus on testing the concept of eyeFER rather than be mired in porting Python pre-processing into Unity.
 
@@ -181,7 +181,11 @@ For training our model, we based our methodology off of A. Savchenko's [paper](h
 
 Specifically Savchenko split finetuning into two stages. First, Savchenko trained the last dense layer (the classifier) with all other weights frozen for 3 epochs. Second, Savchenko trained the entire model (unfrozen) for 10 epochs.
 
-We 
+For our purposes, I followed the same first stage but changed the second stage. Due to limited computational resources (and to make training time feasible), I elected to only unfreeze the last 2 convolutional layers and last 2 dense layers (which includes the classifier).
+
+I ended up only using the model trained for 5 epochs instead of 10 because the model started to overfit (test loss curved back up). In retrospect, overfitting was another good reason not to unfreeze and train the entire model.
+
+The overfitting warrants future investigation on whether if it was caused by the lack of data (maybe I should apply extra augmentations like horizontal flipping) or if it was caused by the extreme difficulty of the task itself (eyeFER).
 
 PyTorch included functions to convert its models to the ONNX format, which is recognized by the Barracuda library. This allowed us to easily port the model architecture and trained weights into Unity.
 
@@ -195,7 +199,7 @@ We tried a couple examples written by the authors of the library and found that 
 
 ### Iris Based Depth Estimation
 
-what has been done
+**What has already been done:**
 
 Since the iris is about a constant size across the human population (11.7mm with a very small margin of error), we can use this to estimate the depth of faces. We borrowed the math that uses similar triangles from the [MediaPipe Github](https://github.com/google/mediapipe).
 
@@ -210,6 +214,10 @@ Since the iris is about a constant size across the human population (11.7mm with
 </div>
 
 Above are images taken from [Google AI Blog](https://ai.googleblog.com/2020/08/mediapipe-iris-real-time-iris-tracking.html). We can see this is not a mad man's idea and it actually works.
+
+To reiterate, we use MediaPipe's Face Landmarking and Iris Landmarking models to get the iris size in pixels. Then we obtain the depth by comparing the pixel size with its real world size of 11.7mm.
+
+**What Derek Did:**
 
 After obtaining the depth, we placed a world canvas at that depth from the camera, set the forward vector to be the same as that of the camera, and resized the world canvas size to match the frustrum. This allowed us to reuse the same code we used in the 2D case to place the emoji.
 
@@ -314,7 +322,7 @@ When users want to retrieve their speech-to-text memo, they can click on the “
 
 **Analysis**
 
-In figure 1, we weighted our baseline and finetuned model's output (predicted probabilities for the 8 emotions) by $\alpha$ and $1-\alpha$ repsectively to create an ensemble model.
+In figure 1, we weighted our baseline and finetuned model's output (predicted probabilities for the 8 emotions) by α and 1-α respectively to create an ensemble model.
 
 The blue curve in fig. 1 actually is to be expected. This curve represents our ensemble model's performance on the original AffectNet dataset. I hypothesis that our finetuned model performs so poorly because of how we augmented the dataset. By zero-ing out the lower half of the face, the feature activations related to the mouth and any lower part of the face are always zero. This would be true all the way to the last layer, where our finetuning operates on. So when we perform gradient descent, the weighting on these features never gets any signal. Basically, the eye based features never learn to "play well" with the presence of mouth features.
 
@@ -324,11 +332,31 @@ This does lead us to be curious. What if we also trained a mouthFER? Would ensem
 
 The orange line in fig. 1 shows the ensemble performance on the augmented dataset. Though this is also somewhat of an unfair evaluation since the baseline has never been trained on the augmented dataset, we argue that there is still value to this analysis.
 
-For one, this curve shows that the finetuned model contributes more to the performance on the augmented dataset than the baseline. We know this by comparing the steepness on both sides of the curve (split at $\alpha = 0.5$). It is interesting to note that at around $alpha = 0.5$, we get a very small bump in performance.
+For one, this curve shows that the finetuned model contributes more to the performance on the augmented dataset than the baseline. We know this by comparing the steepness on both sides of the curve (split at α = 0.5). It is interesting to note that at around α = 0.5, we get a very small bump in performance.
 
 Secondly, we can also treat this analysis as what happens when we zero out activations for mouth related features. (Though it's less clear how this affects deep features that depend on both shallower eye and mouth features.)
 
 Even though we have to take fig. 1 with a grain of salt, we created this graph because we think it is an interesting way to present our results.
+
+From fig. 2 we see that the baseline model scored 61.3% on the original AffectNet dataset and the finetuned modoel scored 43.32% on the augmented dataset. We also see that our model scored 57.14% evaluated on the compressed augmented dataset.
+
+This looks like as if we need a handicap to even come close to SOTA. Even if we did, that is impressive given the fact that we have no mouth to work with! But let us consider this from another perspective.
+
+The baseline model managed to score a whopping 71.61% accuracy when evaluated on the compressed original dataset.
+
+We lose almost 26 points when we evaluate the baseline on the augmented dataset and we lose almost 22 points when we evaluate it on the compressed augmented dataset.
+
+Compare this to our finetuned model. Our finetuned model scored of 57.14% on the compressed augmented dataset. This is a loss of 14.47 points. Not great but, at least on paper, we are _less inaccurate_ than the baseline!
+
+Keep in mind, some papers are published when they even get just a few points of increase in accuracy. Here, we are likely pioneers. At the time of this writing, it is likely a vacuous truth that we have trained the best eyeFER model in existence!
+
+Figures 3 through 5 are our confusion matrices. A strongly lit up diagonal indicates that a model is doing well on that particular dataset.
+
+In fig. 4, we can see that our finetuned model really did make improvements on our augmented dataset. The diagonal on the finetuned model's confusion matrix is more pronounced than that of the baseline model.
+
+We can see in the margins that for figures 3 and 4, the test dataset is balanced.
+
+An interesting phenomenon is that in fig. 5, the distribution (likelihood) of the finetuned model's predictions better matches that of the the compressed test dataset. (We can see this by comparing the margins).
 
 ### eyeFER in Practice <a name="ePr"></a>
 
