@@ -116,7 +116,7 @@ We could even use more deep learning to do this. There has been [work done the o
 
 Thirdly, our depth estimation only works for a single face setting. We will describe the technical reason in the following paragraph.
 
-Keijiro's MediaPipe ports use pre and post-processing steps that utilize shaders. Though Barracuda and the model supports batch processing, it's unclear how to batch that work with shaders.
+Keijiro's MediaPipe ports use pre and post-processing steps that utilize shaders. Though Barracuda and the model supports batch processing, it's unclear how to make shaders ingest batches as input. (This might be obvious to people who write shaders but my expertise is soley within the realm of Tensorflow/PyTorch.)
 
 A simple method would be, for the input, use a for loop and concatentate the shader output for each image in the batch. Then, after executing the model, we can use another for loop and compute the shader for each batch slice individually.
 
@@ -141,7 +141,9 @@ Future work such as denoising the raw audio file can be done in order to improve
 
 **What has already been done:**
 
-First, as far as libraries and SDKs that are free, we haven't found any library more general than Barracuda for neural network deployment onto Unity. And as far as we're aware, a port of MediaPipe ont Unity is the best option. Mediapipe can handle everything up to face emotion recognition. Specifically, we use Keijiro's port of three MediaPipe models: Face Detection, Face Landmarking, and Iris Landmarking.
+(Barracuda)[https://docs.unity3d.com/Packages/com.unity.barracuda@3.0/manual/index.html] is a "neural network inference library" that is the heart and soul of the project. It allowed us to run neural networks in Unity.
+
+First, as far as libraries and SDKs that are free, we haven't found any library more general than Barracuda for neural network deployment onto Unity. And as far as we're aware, a port of MediaPipe into Unity is the best option. Mediapipe can handle everything up to face emotion recognition. Specifically, we use Keijiro's port of three MediaPipe models: Face Detection, Face Landmarking, and Iris Landmarking.
 
 Since we need to finetune a model for eyeFER anyway, we thought it be best to find a PyTorch model so we can train it. (There might be face emotion recognition plugins for Unity but we want to compare the effect of finetuning.) Hence, we used Barracuda to support all neural network ports.
 
@@ -163,52 +165,61 @@ Zero-ing out the lower half of the face can be done on the fly efficiently using
 
 We chose the nose point to be landmark #5 because it looked good. Masks worn properly cover part of the nose and this point seemed to be close to where the top of a mask would be.
 
-<img src="https://chromestone.github.io/Advances-In-XR/mesh_map.jpg" alt="keypoints_map" style="width:25%">
+<img src="https://chromestone.github.io/Advances-In-XR/mesh_map.jpg" alt="keypoints_map" loading="lazy" style="width:50%">
 
 MediaPipe FaceMesh Keypoints obtained from [their repo](https://github.com/tensorflow/tfjs-models/tree/master/face-landmarks-detection).
 
 <img src="https://chromestone.github.io/Advances-In-XR/results/masked_face_landmarking.jpg" alt="masked_face_landmarking" loading="lazy" style="width:50%">
 
-Not only do we see in the above image that we are approximately zero-ing out the right area, we also see that face landmarking works for masked faces.
+Not only do we see in the above image that we are approximately zero-ing out the right area, but we also see that face landmarking works for masked faces.
 
-Lastly, the only other important detail is zero-ing out the face. Although we use the term zero-ing out, properly trained deep learning models always normalize their inputs. In this case, the model obtained from A. Savchenko's [repo](https://github.com/HSE-asavchenko/face-emotion-recognition) used z-score normalization: $\frac{x - \mu}{\sigma}$. We used the fact that after this normalization, the mean is mapped to zero. The mean was approximately RGB=(124, 116, 104). This is the color we actually used to zero-out the lower half of the face.
+Lastly, the only other important detail is zero-ing out the face. Although we use the term zero-ing out, properly trained deep learning models always normalize their inputs. In this case, the model obtained from A. Savchenko's [repo](https://github.com/HSE-asavchenko/face-emotion-recognition) used z-score normalization: $(x - \mu)/\sigma$. We used the fact that after this normalization, the mean is mapped to zero. The mean was approximately RGB=(124, 116, 104). This is the color we actually used to zero-out the lower half of the face.
 
-For this project, one consideration for zero-ing out the face rather than overlaying a synthetic mask was the ease of implementation. It's trivial to implement in Python using numpy AND it's as simple as setting a section of a Color array in Unity to a specific Color. We wanted to focus on testing the concept of eyeFER rather than being mired in porting Python pre-processing into Unity.
+For this project, one consideration for zero-ing out the face rather than overlaying a synthetic mask was the ease of implementation. It's trivial to implement in Python using numpy AND it's as simple as setting a section of a Color array in Unity to a specific Color. We wanted to focus on testing the concept of eyeFER rather than be mired in porting Python pre-processing into Unity.
 
 For training our model, we based our methodology off of A. Savchenko's [paper](https://arxiv.org/abs/2103.17107). In this paper, Savchenko first trained the model on auxillary tasks such as face recognition. Then, Savchenko finetuned this model on AffectNet.
 
 Specifically Savchenko split finetuning into two stages. First, Savchenko trained the last dense layer (the classifier) with all other weights frozen for 3 epochs. Second, Savchenko trained the entire model (unfrozen) for 10 epochs.
 
-how many epochs and cite Savchenko
+We 
 
-Mention ONNX format to barracuda
+PyTorch included functions to convert its models to the ONNX format, which is recognized by the Barracuda library. This allowed us to easily port the model architecture and trained weights into Unity.
 
+Lastly, I wrote the code to combine all of the models together into one flexible pipeline. The user has the option to turn on eyeFER or depth estimation in the settings.
 
-
-Write the code to combine all of the models together into one flexible pipeline (with the option to turn off various models depending on the selected mode)
+The following are the details regarding how I split the neural network compute over multiple update calls to prevent locking up the application.
 
 We were lucky that Barracuda has support for manually calling each layer in the model. This made it possible to run large models without locking up the application.
 
-We tried a couple examples written by the authors of the library and found that they all still locked up the screen (such as using a co-routine). So we dug further into the documentation and used some inspirations from their example to create a new approach. In this new approach we budget compute using a precise Stopwatch and only call layers in the model if there is still time left for the current update call.
-
+We tried a couple examples written by the authors of the library and found that they all still locked up the screen (such as using a co-routine). So we dug further into the documentation and used some inspirations from their example to create a new approach. In this new approach we budget compute using a precise Stopwatch and only call layers in the model while there is still time left for the current update call. This budget can be set in the editor.
 
 ### Iris Based Depth Estimation
 
 what has been done
 
-TODO: include 2 asesome grpahics from mediapipe
+Since the iris is about a constant size across the human population (11.7mm with a very small margin of error), we can use this to estimate the depth of faces. We borrowed the math that uses similar triangles from the [MediaPipe Github](https://github.com/google/mediapipe).
 
-what derek did
+<div>
+  <div style="width:50%; float:left;">
+    <img src="https://chromestone.github.io/Advances-In-XR/google_ai_blog_eye.png" alt="google_ai_blog_eye" loading="lazy">
+  </div>
+  <div style="width:50%; float:left">
+    <img src="https://chromestone.github.io/Advances-In-XR/google_ai_blog_depth.gif" alt="google_ai_blog_depth" loading="lazy">
+  </div>
+  <div style="clear:both; display:table;"></div>
+</div>
 
-use predicted depth to visualize
+Above are images taken from [Google AI Blog](https://ai.googleblog.com/2020/08/mediapipe-iris-real-time-iris-tracking.html). We can see this is not a mad man's idea and it actually works.
 
-figure out a way to not update game object pos as much
+After obtaining the depth, we placed a world canvas at that depth from the camera, set the forward vector to be the same as that of the camera, and resized the world canvas size to match the frustrum. This allowed us to reuse the same code we used in the 2D case to place the emoji.
 
- The solution was to use a exponential moving average to detect when new predictions started drifting from past predictions. (Simple Euclidean distance with thresholding).
+As mentioned earlier, updating a world space canvas too frequently lead to a non-AR experience. In my testing, I found that updating on fixed time intervals (1, 2, and 3 seconds) all did not achieve the effect that I was looking for. When we set the position of the canvas (and the emoji within), it looks like the emoji teleports.
 
-software engineering
+The solution was to use a exponential moving average to detect when new predictions started drifting from past predictions. (Simple Euclidean distance with thresholding.)
 
-make it so that world objects don't interfere with capture by using culling mask
+This way, only when we detect that "where we thought the face was" is completely wrong, do we re-position the world canvas.
+
+To summarize, the 2D face detection still runs every frame, but we choose not to visualize it until we detect a significant deviation.
 
 Next, I will detail our method for getting camera capture to work (somewhat) efficiently. We need this so we can feed the camera image as input to the neural networks in Unity.
 
@@ -394,5 +405,6 @@ See [demo](#demo) in earlier section.
    * [Affectnet Dataset](http://mohammadmahoor.com/affectnet/)
    * [Affectnet Subset (that we actually used)](https://www.kaggle.com/datasets/mouadriali/affectnetsample)
    * Face Emotion Recognition by A. Savchenko: [paper](https://arxiv.org/abs/2103.17107) and [code](https://github.com/HSE-asavchenko/face-emotion-recognition).
+   * [Barracuda](https://docs.unity3d.com/Packages/com.unity.barracuda@3.0/manual/index.html)
    * Keijiro's ports of MediaPipe to Unity using the Barracuda library: [BlazeFace](https://github.com/keijiro/BlazeFaceBarracuda), [Face Landmark](https://github.com/keijiro/FaceLandmarkBarracuda), and [Iris Landmark](https://github.com/keijiro/IrisBarracuda).
    * [MediaPipe ](https://google.github.io/mediapipe/)  (mainly for the face landmark model which we used to create the augmented dataset) and their [GitHub](https://github.com/google/mediapipe) where we found math for iris size to depth.
