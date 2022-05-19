@@ -103,7 +103,7 @@ Thirdly, if we updated the world object too frequently (in depth estimation mode
 **Software Engineering and  FER/eyeFER:** <br />
 One aspect of the app we can definitely focus on is optimization. In practice, we've found that the phone can get hot and this high power draw cannot be good for battery life.
 
-For now this can be allievated by using a bigger heatsink, such as a device as big as an iPad (this also has the benefit of a larger screen to see the student's emotions). In the future, we hope that better hardware and software will increase the practicality of deep learning for mobile.
+For now this can be alleviated by using a bigger heatsink, such as a device as big as an iPad (this also has the benefit of a larger screen to see the student's emotions). In the future, we hope that better hardware and software will increase the practicality of deep learning for mobile.
 
 There are also latency issues since we have to run such big models on phones. The iPad would have more computer power and we should test our app's performance on various devices.
 
@@ -122,9 +122,9 @@ A simple method would be, for the input, use a for loop and concatentate the sha
 
 We can also look into homuler's [port of MediaPipe](https://github.com/homuler/MediaPipeUnityPlugin) that requires native compilation.
 
-Fourthly, it could be worthwhile exploring how to make FER models more robust to face pose and lighting positions. It's interesting that while keeping my face expression the same, I've found that just by varying head tilt the model can bounce around various emotions.
+Fourthly, it could be worthwhile exploring how to make FER models more robust to face pose and lighting positions. I've found that varying the head tilt (with a static facial expression) causes the model to bounce around various emotions.
 
-Perhaps there is a way to create a loss function that enforces smoothness on various head angles (which might require face reconstruction) and lighting conditions. I would have to imagine such a method would be costly to compute.
+Perhaps there is a way to create a loss function that enforces smoothness on various head angles (which might require face reconstruction) and lighting conditions. I believe that such a loss may be costly to compute.
 
 There are also datasets available for FER on videos. Using models that work with videos might help smooth out the predicted emotion. (Though we'd have to consider the computational cost given the limited compute budget on mobile devices.)
 
@@ -133,7 +133,22 @@ Future work such as denoising the raw audio file can be done in order to improve
 
 ## Related Work <a name="rwork"></a>
 
-**TODO**
+Two datasets we've looked into are [FER2013](https://www.kaggle.com/c/challenges-in-representation-learning-facial-expression-recognition-challenge/data) and [AffectNet](http://mohammadmahoor.com/affectnet/).
+
+For FER2013, we found a [PyTorch implementation](https://github.com/phamquiluan/ResidualMaskingNetwork) using Residual Masking Networks that claimed an accuracy of 74.14.
+
+Why didn't we use FER2013? Because it's a black and white dataset and the residual masking network is massive. This is not optimal for mobile compute. (I will give credit that the repo does include an EfficientNet implementation but we had issues that I forgot to document.)
+
+Regardless, what matters is that in the end we chose the AffectNet dataset. AffectNet contains over 400 thousand labeled images and the newest version includes 8 emotions:
+
+<img src="https://chromestone.github.io/Advances-In-XR/affectnet.jpg" alt="affectnet" width="20%" loading="lazy">
+
+This dataset wasn't publicly available and we didn't want to waste time requesting it. (At the time I didn't think I'd need much data either. I might need the entire dataset if I ever want to make this a highly rigorous research project.) So I found a [publicly available subset](https://www.kaggle.com/datasets/mouadriali/affectnetsample). After stripping out images where MediaPipe's face landmarking failed, we were left with:
+
+* 37394 Training Images
+* 3987 Validation Images
+
+As mentioned before, the current [state of the art](https://arxiv.org/abs/2103.17107) model is EfficientNet with a performance of 62.42% on AffectNet (at the time of writing this report).
 
 ## Methodology <a name="method"></a>
 
@@ -151,7 +166,7 @@ As for eye based face emotion recognition, at the time of this writing, as far a
 
 **What Derek Did:**
 
-Derek was in charge of both training, analyzing and deploying the models. For training and analysis, this was a machine learning problem done in Python. For deploying the models, this was a software engineering task done with Unity and C#.
+Derek was in charge of training, analyzing and deploying the models. For training and analysis, this was a machine learning problem done in Python. For deploying the models, this was a software engineering task done with Unity and C#.
 
 First, I will document the technical details of preparing the dataset and training our model. All of the code is included in our GitHub repo under FinalProjectML.
 
@@ -173,13 +188,13 @@ MediaPipe FaceMesh Keypoints obtained from [their repo](https://github.com/tenso
 
 Not only do we see in the above image that we are approximately zero-ing out the right area, but we also see that face landmarking works for masked faces.
 
-Lastly, the only other important detail is zero-ing out the face. Although we use the term zero-ing out, properly trained deep learning models always normalize their inputs. In this case, the model obtained from A. Savchenko's [repo](https://github.com/HSE-asavchenko/face-emotion-recognition) used z-score normalization: (x−μ)/σ. We used the fact that after this normalization, the mean is mapped to zero. The mean was approximately RGB=(124, 116, 104). This is the color we actually used to zero-out the lower half of the face.
+The last important detail is regards to zero-ing out the face. Although we use the term zero-ing out, properly trained deep learning models always normalize their inputs. In this case, the model obtained from A. Savchenko's [repo](https://github.com/HSE-asavchenko/face-emotion-recognition) used z-score normalization: (x−μ)/σ. We used the fact that after this normalization, the mean is mapped to zero. The mean was approximately RGB=(124, 116, 104). This is the color we actually used to zero-out the lower half of the face.
 
 For this project, one consideration for zero-ing out the face rather than overlaying a synthetic mask was the ease of implementation. It's trivial to implement in Python using numpy AND it's as simple as setting a section of a Color array in Unity to a specific Color. We wanted to focus on testing the concept of eyeFER rather than be mired in porting Python pre-processing into Unity.
 
 For training our model, we based our methodology off of A. Savchenko's [paper](https://arxiv.org/abs/2103.17107). In this paper, Savchenko first trained the model on auxillary tasks such as face recognition. Then, Savchenko finetuned this model on AffectNet.
 
-Specifically Savchenko split finetuning into two stages. First, Savchenko trained the last dense layer (the classifier) with all other weights frozen for 3 epochs. Second, Savchenko trained the entire model (unfrozen) for 10 epochs.
+Specifically Savchenko split finetuning into two stages. First, Savchenko trained the last dense layer (the classifier) with all other weights frozen for 3 epochs. Secondly, Savchenko trained the entire model (unfrozen) for 10 epochs.
 
 For our purposes, I followed the same first stage but changed the second stage. Due to limited computational resources (and to make training time feasible), I elected to only unfreeze the last 2 convolutional layers and last 2 dense layers (which includes the classifier).
 
@@ -195,7 +210,7 @@ The following are the details regarding how I split the neural network compute o
 
 We were lucky that Barracuda has support for manually calling each layer in the model. This made it possible to run large models without locking up the application.
 
-We tried a couple examples written by the authors of the library and found that they all still locked up the screen (such as using a co-routine). So we dug further into the documentation and used some inspirations from their example to create a new approach. In this new approach we budget compute using a precise Stopwatch and only call layers in the model while there is still time left for the current update call. This budget can be set in the editor.
+We tried a couple examples written by the authors of the library and found that they all still locked up the screen. (For instance, we tried using a co-routine.) So we dug further into the documentation and used some inspirations from their example to create a new approach. In this new approach we budget compute using a precise Stopwatch and only call layers in the model while there is still time left for the current update call. This budget can be set in the editor.
 
 ### Iris Based Depth Estimation
 
@@ -324,7 +339,7 @@ When users want to retrieve their speech-to-text memo, they can click on the “
 
 In figure 1, we weighted our baseline and finetuned model's output (predicted probabilities for the 8 emotions) by α and 1-α respectively to create an ensemble model.
 
-The blue curve in fig. 1 actually is to be expected. This curve represents our ensemble model's performance on the original AffectNet dataset. I hypothesis that our finetuned model performs so poorly because of how we augmented the dataset. By zero-ing out the lower half of the face, the feature activations related to the mouth and any lower part of the face are always zero. This would be true all the way to the last layer, where our finetuning operates on. So when we perform gradient descent, the weighting on these features never gets any signal. Basically, the eye based features never learn to "play well" with the presence of mouth features.
+The blue curve in fig. 1 actually is to be expected. This curve represents our ensemble model's performance on the original AffectNet dataset. I hypothesize that our finetuned model performs so poorly because of how we augmented the dataset. By zero-ing out the lower half of the face, the feature activations related to the mouth and any lower part of the face are always zero. This would be true all the way to the last layer, which our finetuning optimizes. So when we perform gradient descent, the weighting on these features never gets any signal. Basically, the eye based features never learn to "play well" with the presence of mouth features.
 
 Thus it is somewhat unfair to evaluate our finetuned model on the original dataset with full faces. And in practice, we argue that this full face problem isn't a problem at all. The presence of a face almost always means that we can perform landmark detection. So that means we can easily zero out the lower half of the face before feeding it into our finetuned model. Our eyeFER model will always get input similar to its training set, the augmented dataset. In our app, we always use face landmarking to zero out the lower half of the face before feeding the face into our eyeFER model.
 
@@ -338,7 +353,7 @@ Secondly, we can also treat this analysis as what happens when we zero out activ
 
 Even though we have to take fig. 1 with a grain of salt, we created this graph because we think it is an interesting way to present our results.
 
-From fig. 2 we see that the baseline model scored 61.3% on the original AffectNet dataset and the finetuned modoel scored 43.32% on the augmented dataset. We also see that our model scored 57.14% evaluated on the compressed augmented dataset.
+From fig. 2 we see that the baseline model scored 61.3% on the original AffectNet dataset and the finetuned modoel scored 43.32% on the augmented dataset. We also see that our model scored 57.14% when evaluated on the compressed augmented dataset.
 
 This looks like as if we need a handicap to even come close to SOTA. Even if we did, that is impressive given the fact that we have no mouth to work with! But let us consider this from another perspective.
 
@@ -346,7 +361,7 @@ The baseline model managed to score a whopping 71.61% accuracy when evaluated on
 
 We lose almost 26 points when we evaluate the baseline on the augmented dataset and we lose almost 22 points when we evaluate it on the compressed augmented dataset.
 
-Compare this to our finetuned model. Our finetuned model scored of 57.14% on the compressed augmented dataset. This is a loss of 14.47 points. Not great but, at least on paper, we are _less inaccurate_ than the baseline!
+Compare this to our finetuned model. Our finetuned model scored 57.14% on the compressed augmented dataset. This is a loss of 14.47 points. Not great but, at least on paper, we are _less inaccurate_ than the baseline!
 
 Keep in mind, some papers are published when they even get just a few points of increase in accuracy. Here, we are likely pioneers. At the time of this writing, it is likely a vacuous truth that we have trained the best eyeFER model in existence!
 
@@ -356,7 +371,7 @@ In fig. 4, we can see that our finetuned model really did make improvements on o
 
 We can see in the margins that for figures 3 and 4, the test dataset is balanced.
 
-An interesting phenomenon is that in fig. 5, the distribution (likelihood) of the finetuned model's predictions better matches that of the the compressed test dataset. (We can see this by comparing the margins).
+An interesting phenomenon is that in fig. 5, the distribution (likelihood) of the finetuned model's predictions matches that of the compressed test dataset. However, the baseline is all over the place with a very strong bias towards predicting "activated". (We can see this by comparing the margins).
 
 ### eyeFER in Practice <a name="ePr"></a>
 
