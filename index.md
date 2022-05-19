@@ -26,6 +26,7 @@ Welcome to our Advances in XR (CMSC498F/CMSC838C) final project ***instructAR***
 * [Instructions](#inst)
 * [Links to our source code](#code)
 * [References](#ref)
+* [Acknowledgements](#ack)
 
 ## Introduction <a name="introduction"></a>
 _Imagine you're a teacher in a classroom of students wearing masks. You have no idea if they understand the lecture. Our project idea is to create a teaching aid using AR that can hint at what a student is feeling (e.g. confusion or frustration). Our first step is to implement a user-friendly system for sentiment detection on unoccluded faces. We are hopeful but unsure if this can be extended to masked faces._
@@ -133,9 +134,9 @@ Future work such as denoising the raw audio file can be done in order to improve
 
 ## Related Work <a name="rwork"></a>
 
-Two datasets we've looked into are [FER2013](https://www.kaggle.com/c/challenges-in-representation-learning-facial-expression-recognition-challenge/data) and [AffectNet](http://mohammadmahoor.com/affectnet/).
+The two datasets we've looked into are [FER2013](https://www.kaggle.com/c/challenges-in-representation-learning-facial-expression-recognition-challenge/data) and [AffectNet](http://mohammadmahoor.com/affectnet/).
 
-For FER2013, we found a [PyTorch implementation](https://github.com/phamquiluan/ResidualMaskingNetwork) using Residual Masking Networks that claimed an accuracy of 74.14.
+For FER2013, we found a [PyTorch implementation](https://github.com/phamquiluan/ResidualMaskingNetwork) using Residual Masking Networks that claimed an accuracy of 74.14%.
 
 Why didn't we use FER2013? Because it's a black and white dataset and the residual masking network is massive. This is not optimal for mobile compute. (I will give credit that the repo does include an EfficientNet implementation but we had issues that I forgot to document.)
 
@@ -451,3 +452,11 @@ See [demo](#demo) in earlier section.
    * [Barracuda](https://docs.unity3d.com/Packages/com.unity.barracuda@3.0/manual/index.html)
    * Keijiro's ports of MediaPipe to Unity using the Barracuda library: [BlazeFace](https://github.com/keijiro/BlazeFaceBarracuda), [Face Landmark](https://github.com/keijiro/FaceLandmarkBarracuda), and [Iris Landmark](https://github.com/keijiro/IrisBarracuda).
    * [MediaPipe ](https://google.github.io/mediapipe/)  (mainly for the face landmark model which we used to create the augmented dataset) and their [GitHub](https://github.com/google/mediapipe) where we found math for iris size to depth.
+
+## Acknowledgements <a name="ack"></a>
+
+* My roommate Garrett who was always willing to be my test subject and help me test the app.
+* My friend Sahil for supporting me this semester and helping me test the app.
+* My former professors Dr. Tu and Dr. Doboszczak for helping me test the app.
+* Dr. Ming Lin and Nick for making this class possible.
+  * Nick was very approachable and gave great advice.
